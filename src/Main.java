@@ -2,11 +2,19 @@ import java.util.Optional;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.paint.Color;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -37,11 +45,11 @@ public class Main extends Application {
                 event.consume();
             }
         });
-        Group root = new Group();
-        Scene scene = new Scene(root, 600, 300);
-        scene.setFill(Color.GRAY);
-        stage.setScene(scene);
-        stage.show();
+
+        VBox menuOption = new VBox();
+        
+
+
     }
 
     public static void main(String[] args) {
