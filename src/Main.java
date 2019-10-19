@@ -1,5 +1,3 @@
-package app;
-
 import java.util.Optional;
 
 import javafx.application.Application;
@@ -11,10 +9,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class App extends Application {
+public class Main extends Application {
 
     private static boolean exitCheck(Stage stage) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure?", ButtonType.NO, ButtonType.YES);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit Tower Defense?",
+                ButtonType.NO, ButtonType.YES);
         alert.setHeaderText("");
         alert.setTitle("Really Exit?");
         alert.initOwner(stage);
