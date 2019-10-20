@@ -2,7 +2,7 @@ import java.util.Optional;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.control.*;;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class Main extends Application {
