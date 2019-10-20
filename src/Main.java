@@ -21,8 +21,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private static final int GAME_WIDTH = 1280;
-    private static final int GAME_HEIGHT = 720;
+    private static final int GAME_WIDTH = 720;
+    private static final int GAME_HEIGHT = (GAME_WIDTH / 16) * 9;
 
     private static boolean exitCheck(Stage stage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit Tower Defense?",
@@ -75,7 +75,7 @@ public class Main extends Application {
         label.setTextFill(Color.DARKORANGE);
 
         menuOption.getChildren().addAll(label, startButton, continueButton, settingButton, exitButton);
-        VBox.setMargin(label, new Insets(0,00,100,0));
+        VBox.setMargin(label, new Insets(0, 00, 100, 0));
         menuOption.setSpacing(10);
         menuOption.setAlignment(Pos.CENTER);
 
