@@ -7,9 +7,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -17,6 +20,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
+    private static final int GAME_WIDTH = 1280;
+    private static final int GAME_HEIGHT = 720;
 
     private static boolean exitCheck(Stage stage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit Tower Defense?",
@@ -58,6 +64,8 @@ public class Main extends Application {
         settingButton.setMinWidth(menuOption.getPrefWidth());
         exitButton.setMinWidth(menuOption.getPrefWidth());
 
+        exitButton.setStyle("-fx-opacity: 0.1");
+
         startButton.setMinHeight(menuOption.getPrefHeight());
         continueButton.setMinHeight(menuOption.getPrefHeight());
         settingButton.setMinHeight(menuOption.getPrefHeight());
@@ -82,12 +90,12 @@ public class Main extends Application {
         Image background = new Image("./resources/img/MainBackground.jpg");
         ImageView imageView = new ImageView(background);
         imageView.setPreserveRatio(true);
-        imageView.setFitWidth(1280);
+        imageView.setFitWidth(GAME_WIDTH);
 
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(imageView, menuOption);
 
-        Scene scene = new Scene(stackPane, 1280, 720);
+        Scene scene = new Scene(stackPane, GAME_WIDTH, GAME_HEIGHT);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
