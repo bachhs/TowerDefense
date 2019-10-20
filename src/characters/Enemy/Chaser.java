@@ -1,4 +1,4 @@
-package characters.Enemy;
+package characters.enemy;
 
 public class Chaser extends Enemy {
     public Chaser(String imagePath) {

@@ -1,4 +1,4 @@
-package characters.Enemy;
+package characters.enemy;
 
 import characters.Entity;
 import javafx.scene.image.Image;
@@ -39,8 +39,10 @@ public abstract class Enemy extends Entity {
     }
 
     public void decreaseHP(int dec) {
-        if (HP > dec) HP = HP - dec;
-        else HP = 0;
+        if (HP > dec)
+            HP = HP - dec;
+        else
+            HP = 0;
     }
 
     public boolean isDead() {

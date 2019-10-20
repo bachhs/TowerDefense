@@ -1,4 +1,4 @@
-package characters.Enemy;
+package characters.enemy;
 
 public class PeaceEnvog extends Enemy {
     public PeaceEnvog(String imagePath) {

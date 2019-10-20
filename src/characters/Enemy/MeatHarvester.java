@@ -1,4 +1,4 @@
-package characters.Enemy;
+package characters.enemy;
 
 public class MeatHarvester extends Enemy {
     public MeatHarvester(String imagePath) {

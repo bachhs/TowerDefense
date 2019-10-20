@@ -1,4 +1,4 @@
-package characters.Enemy;
+package characters.enemy;
 
 public class HUNK extends Enemy {
     public HUNK(String imagePath) {

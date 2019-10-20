@@ -1,4 +1,4 @@
-package characters.Turret;
+package characters.turret;
 
 import characters.Tile;
 
