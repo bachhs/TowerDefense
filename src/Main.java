@@ -1,8 +1,11 @@
+import java.io.File;
 import java.util.Optional;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -33,6 +36,7 @@ public class Main extends Application {
                 event.consume();
             }
         });
+
 
         stage.setScene(scenes.MainMenu.getScene(stage));
         stage.setResizable(false);

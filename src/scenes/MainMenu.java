@@ -17,10 +17,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.Optional;
 
 enum MainMenuOption {
@@ -89,6 +92,16 @@ public class MainMenu {
 
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(imageView, menuOption);
+
+        try {
+            Media media = new Media("./resources/music/urf.mp3");
+            MediaPlayer sound = new MediaPlayer(media);
+            sound.play();
+        }
+        catch (Exception e) {
+            ;
+        }
+
         return new Scene(stackPane, GAME_WIDTH, GAME_HEIGHT);
     }
 }

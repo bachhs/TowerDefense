@@ -1,4 +1,6 @@
-package characters;
+package characters.Turret;
+
+import characters.Tile;
 
 public abstract class Turret extends Tile {
     protected int speed;
