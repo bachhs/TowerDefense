@@ -3,6 +3,7 @@ package scenes;
 import static constants.GlobalConstants.GAME_HEIGHT;
 import static constants.GlobalConstants.GAME_WIDTH;
 
+import java.io.File;
 import java.util.Optional;
 
 import javafx.application.Platform;
@@ -19,6 +20,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -90,8 +94,15 @@ public class MainMenu {
         imageView.setPreserveRatio(true);
         imageView.setFitWidth(GAME_WIDTH);
 
+        MediaPlayer mainMusic = new MediaPlayer(
+                new Media(new File("./src/resources/music/urf.mp3").toURI().toString()));
+        mainMusic.setCycleCount(MediaPlayer.INDEFINITE);
+        mainMusic.play();
+        MediaView mediaView = new MediaView(mainMusic);
+
         StackPane stackPane = new StackPane();
-        stackPane.getChildren().addAll(imageView, menuOption);
+        stackPane.getChildren().addAll(mediaView, imageView, menuOption);
+
         return new Scene(stackPane, GAME_WIDTH, GAME_HEIGHT);
     }
 }
