@@ -1,6 +1,9 @@
 package scenes;
 
-import static constants.GlobalConstants.*;
+import static constants.GlobalConstants.GAME_HEIGHT;
+import static constants.GlobalConstants.GAME_WIDTH;
+
+import java.util.Optional;
 
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -11,7 +14,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -20,8 +22,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
-import java.util.Optional;
 
 enum MainMenuOption {
     Start, Continue, Setting, Exit;
@@ -34,24 +34,28 @@ public class MainMenu {
         menuOption.setPrefHeight(35);
         menuOption.setAlignment(Pos.CENTER);
 
-        Label label = new Label("TOWER DEFENSE PRO");
-        label.setFont(new Font(40));
-        label.setTextFill(Color.DARKORANGE);
+        Label label = new Label("");
+        Image logo = new Image("./resources/img/Logo.png");
+        ImageView logoView = new ImageView(logo);
+        logoView.setFitHeight(200);
+        logoView.setPreserveRatio(true);
+        label.setGraphic(logoView);
         menuOption.getChildren().add(label);
-        VBox.setMargin(label, new Insets(0, 00, 100, 0));
+        VBox.setMargin(label, new Insets(0, 0, 20, 0));
 
         Button[] button = new Button[MainMenuOption.values().length];
         for (int i = 0; i < button.length; i++) {
             button[i] = new Button(MainMenuOption.values()[i].toString());
             button[i].setMinHeight(menuOption.getPrefHeight());
             button[i].setMinWidth(menuOption.getPrefWidth());
-            button[i].setStyle("-fx-background-color:transparent; -fx-text-fill: gold");
+            button[i].setFont(Font.loadFont("file:./src/resources/font/OETZTYP_.TTF", 40));
+            button[i].setStyle("-fx-background-color:transparent; -fx-text-fill: #f4c20d");
             int finalI = i;
             button[i].setOnMouseEntered(new EventHandler<>() {
 
                 @Override
                 public void handle(MouseEvent t) {
-                    button[finalI].setStyle("-fx-background-color:#dae7f3;");
+                    button[finalI].setStyle("-fx-background-color:#e5f3ff; -fx-text-fill:#f4c20d ");
                 }
             });
 
@@ -60,7 +64,7 @@ public class MainMenu {
 
                 @Override
                 public void handle(MouseEvent t) {
-                    button[finalI1].setStyle("-fx-background-color:transparent; -fx-text-fill: orange");
+                    button[finalI1].setStyle("-fx-background-color:transparent; -fx-text-fill: #f4c20d");
                 }
             });
             menuOption.getChildren().add(button[i]);

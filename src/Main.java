@@ -1,8 +1,11 @@
 import java.util.Optional;
 
+import static constants.GlobalConstants.GAME_NAME;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -33,7 +36,8 @@ public class Main extends Application {
                 event.consume();
             }
         });
-
+        stage.setTitle(GAME_NAME);
+        stage.getIcons().add(new Image("./resources/img/Logo-Small.png"));
         stage.setScene(scenes.MainMenu.getScene(stage));
         stage.setResizable(false);
         stage.show();
