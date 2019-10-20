@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -30,7 +31,7 @@ public class MainMenu {
     public static Scene getScene(Stage stage) {
         VBox menuOption = new VBox(10);
         menuOption.setPrefWidth(100);
-        menuOption.setPrefHeight(50);
+        menuOption.setPrefHeight(35);
         menuOption.setAlignment(Pos.CENTER);
 
         Label label = new Label("TOWER DEFENSE PRO");
@@ -44,9 +45,9 @@ public class MainMenu {
             button[i] = new Button(MainMenuOption.values()[i].toString());
             button[i].setMinHeight(menuOption.getPrefHeight());
             button[i].setMinWidth(menuOption.getPrefWidth());
-            button[i].setStyle("-fx-background-color:transparent; -fx-text-fill: orange");
+            button[i].setStyle("-fx-background-color:transparent; -fx-text-fill: gold");
             int finalI = i;
-            button[i].setOnMouseEntered(new EventHandler<MouseEvent>() {
+            button[i].setOnMouseEntered(new EventHandler<>() {
 
                 @Override
                 public void handle(MouseEvent t) {
@@ -55,7 +56,7 @@ public class MainMenu {
             });
 
             int finalI1 = i;
-            button[i].setOnMouseExited(new EventHandler<MouseEvent>() {
+            button[i].setOnMouseExited(new EventHandler<>() {
 
                 @Override
                 public void handle(MouseEvent t) {

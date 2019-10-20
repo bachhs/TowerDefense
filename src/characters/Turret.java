@@ -1,4 +1,8 @@
 package characters;
 
-public class Turret {
+public abstract class Turret extends Tile {
+    protected int speed;
+    protected int range;
+    protected int damage;
+    protected int score;
 }

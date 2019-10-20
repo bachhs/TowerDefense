@@ -1,4 +1,6 @@
 package characters;
 
-public class Tile {
+public class Tile implements Entity{
+    protected int X;
+    protected int Y;
 }
