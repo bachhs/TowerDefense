@@ -34,7 +34,7 @@ public class Main extends Application {
             }
         });
 
-        stage.setScene(scenes.MainMenu.getScene());
+        stage.setScene(scenes.MainMenu.getScene(stage));
         stage.setResizable(false);
         stage.show();
 
