@@ -1,15 +1,15 @@
-import java.io.InputStream;
 import java.util.Optional;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -66,23 +66,31 @@ public class Main extends Application {
         label.setFont(new Font(40));
         label.setTextFill(Color.DARKORANGE);
 
-        menuOption.getChildren().addAll(label,startButton,continueButton,settingButton,exitButton);
+        menuOption.getChildren().addAll(label, startButton, continueButton, settingButton, exitButton);
+        VBox.setMargin(label, new Insets(0,00,100,0));
         menuOption.setSpacing(10);
         menuOption.setAlignment(Pos.CENTER);
 
-        InputStream is;
-        Image backgroud = new Image("./resources/img/MainBackground.jpg");
-        ImageView imageView = new ImageView(backgroud);
+        exitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                close(stage);
+            }
+        });
+
+        Image background = new Image("./resources/img/MainBackground.jpg");
+        ImageView imageView = new ImageView(background);
         imageView.setPreserveRatio(true);
-        imageView.setFitWidth(600);
+        imageView.setFitWidth(1280);
 
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(imageView, menuOption);
 
-        Scene scene = new Scene(stackPane, 600, 400);
+        Scene scene = new Scene(stackPane, 1280, 720);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
-
 
     }
 
