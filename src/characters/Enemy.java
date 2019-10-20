@@ -5,6 +5,7 @@ public abstract class Enemy implements Entity {
     protected int speed = 0;
     protected int armor = 0;
     protected int score = 0;
+    protected int gift = 0;
 
     String imagePath;
 

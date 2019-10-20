@@ -19,10 +19,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+<<<<<<< HEAD
+=======
+import java.io.File;
+import java.util.Optional;
+
+>>>>>>> cc5b116dfe949c3f5889405c83d4cc8b9606bfb4
 enum MainMenuOption {
     Start, Continue, Setting, Exit;
 }
@@ -93,6 +101,16 @@ public class MainMenu {
 
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(imageView, menuOption);
+
+        try {
+            Media media = new Media("./resources/music/urf.mp3");
+            MediaPlayer sound = new MediaPlayer(media);
+            sound.play();
+        }
+        catch (Exception e) {
+            ;
+        }
+
         return new Scene(stackPane, GAME_WIDTH, GAME_HEIGHT);
     }
 }

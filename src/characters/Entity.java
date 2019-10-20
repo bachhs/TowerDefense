@@ -3,7 +3,15 @@ package characters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public interface Entity {
-    public Image image = null;
-    public ImageView imageView = null;
+public abstract class Entity {
+    protected Image image;
+    protected ImageView imageView;
+
+    public Image getImage() {
+        return image;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
 }
