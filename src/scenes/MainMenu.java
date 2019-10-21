@@ -7,24 +7,29 @@ import java.io.File;
 import java.util.Optional;
 
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import javax.swing.*;
 
 enum MainMenuOption {
     Start, Continue, Setting, Exit;
@@ -36,6 +41,12 @@ public class MainMenu {
         menuOption.setPrefWidth(100);
         menuOption.setPrefHeight(35);
         menuOption.setAlignment(Pos.CENTER);
+
+        MediaPlayer mainMusic = new MediaPlayer(
+                new Media(new File("./src/resources/music/urf.mp3").toURI().toString()));
+        mainMusic.setCycleCount(MediaPlayer.INDEFINITE);
+        mainMusic.play();
+        MediaView mediaView = new MediaView(mainMusic);
 
         Label label = new Label("");
         Image logo = new Image("./resources/img/Logo.png");
@@ -73,6 +84,35 @@ public class MainMenu {
             menuOption.getChildren().add(button[i]);
         }
 
+        /////////////////////////
+        button[MainMenuOption.Setting.ordinal()].addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        Slider volumeSlider = new Slider();
+                        volumeSlider.setValue(mainMusic.getVolume() * 100);
+                        volumeSlider.valueProperty().addListener(new InvalidationListener() {
+                            @Override
+                            public void invalidated(Observable observable) {
+                                mainMusic.setVolume(volumeSlider.getValue() / 100);
+                            }
+                        });
+                        Label label1 = new Label("Volume Bar");
+                        label1.setFont(Font.loadFont("file:./src/resources/font/OETZTYP_.TTF", 60));
+                        label1.setStyle("-fx-text-fill: #7FFF00;");
+                        label1.setScaleX(1);
+                        label1.setScaleY(2);
+                        label1.setTranslateY(-110);
+
+                        StackPane stackPane = new StackPane();
+                        stackPane.getChildren().addAll(new ImageView(new Image("./resources/img/MainBackground.jpg")),
+                                label1, volumeSlider);
+                        Scene setwal = new Scene(stackPane, GAME_WIDTH, GAME_HEIGHT);
+                        stage.setScene(setwal);
+                    }
+                });
+        /////////////////////////////////////////////////////////
+
         button[MainMenuOption.Exit.ordinal()].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
@@ -93,12 +133,6 @@ public class MainMenu {
         ImageView imageView = new ImageView(background);
         imageView.setPreserveRatio(true);
         imageView.setFitWidth(GAME_WIDTH);
-
-        MediaPlayer mainMusic = new MediaPlayer(
-                new Media(new File("./src/resources/music/urf.mp3").toURI().toString()));
-        mainMusic.setCycleCount(MediaPlayer.INDEFINITE);
-        mainMusic.play();
-        MediaView mediaView = new MediaView(mainMusic);
 
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(mediaView, imageView, menuOption);
