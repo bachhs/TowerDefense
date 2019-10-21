@@ -9,6 +9,7 @@ import java.util.Optional;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -84,7 +85,8 @@ public class MainMenu {
             menuOption.getChildren().add(button[i]);
         }
 
-        /////////////////////////
+        /////////////////////////////////////////
+        Button backbutton = new Button("Back");
         button[MainMenuOption.Setting.ordinal()].addEventHandler(MouseEvent.MOUSE_CLICKED,
                 new EventHandler<MouseEvent>() {
                     @Override
@@ -104,14 +106,34 @@ public class MainMenu {
                         label1.setScaleY(2);
                         label1.setTranslateY(-110);
 
+                        backbutton.setFont(Font.loadFont("file:./src/resources/font/OETZTYP_.TTF", 35));
+                        backbutton.setStyle("-fx-background-color:transparent; -fx-text-fill: #7FFF00");
+                        backbutton.setOnMouseEntered(new EventHandler<>() {
+
+                            @Override
+                            public void handle(MouseEvent t) {
+                                backbutton.setStyle("-fx-background-color:#FFF5EE; -fx-text-fill: #7FFF00 ");
+                            }
+                        });
+                        backbutton.setOnMouseExited(new EventHandler<>() {
+
+                            @Override
+                            public void handle(MouseEvent t) {
+                                backbutton.setStyle("-fx-background-color:transparent; -fx-text-fill: #7FFF00");
+                            }
+                        });
+
+                        backbutton.setTranslateX(-540);
+                        backbutton.setTranslateY(-300);
+
                         StackPane stackPane = new StackPane();
                         stackPane.getChildren().addAll(new ImageView(new Image("./resources/img/MainBackground.jpg")),
-                                label1, volumeSlider);
+                                label1, volumeSlider,backbutton);
                         Scene setwal = new Scene(stackPane, GAME_WIDTH, GAME_HEIGHT);
                         stage.setScene(setwal);
                     }
                 });
-        /////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////
 
         button[MainMenuOption.Exit.ordinal()].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
@@ -136,7 +158,15 @@ public class MainMenu {
 
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(mediaView, imageView, menuOption);
+        Scene scenemain = new Scene(stackPane, GAME_WIDTH, GAME_HEIGHT);
 
-        return new Scene(stackPane, GAME_WIDTH, GAME_HEIGHT);
+        backbutton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                stage.setScene(scenemain);
+            }
+        });
+
+        return  scenemain;
     }
 }
