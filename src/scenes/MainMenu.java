@@ -93,6 +93,14 @@ public class MainMenu {
                     public void handle(MouseEvent mouseEvent) {
                         Slider volumeSlider = new Slider();
                         volumeSlider.setValue(mainMusic.getVolume() * 100);
+                        volumeSlider.setPrefWidth(500);
+                        volumeSlider.setMaxWidth(Region.USE_PREF_SIZE);
+                        volumeSlider.setMinWidth(30);
+                        volumeSlider.setTranslateX(250);
+                        volumeSlider.setTranslateY(20);
+                        volumeSlider.setShowTickLabels(true);
+                        volumeSlider.setShowTickMarks(true);
+                        volumeSlider.setStyle("-fx-background-color: yellow");
                         volumeSlider.valueProperty().addListener(new InvalidationListener() {
                             @Override
                             public void invalidated(Observable observable) {
@@ -104,7 +112,7 @@ public class MainMenu {
                         label1.setStyle("-fx-text-fill: #7FFF00;");
                         label1.setScaleX(1);
                         label1.setScaleY(2);
-                        label1.setTranslateY(-110);
+                        label1.setTranslateX(-250);
 
                         backbutton.setFont(Font.loadFont("file:./src/resources/font/OETZTYP_.TTF", 35));
                         backbutton.setStyle("-fx-background-color:transparent; -fx-text-fill: #7FFF00");
