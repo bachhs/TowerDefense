@@ -24,7 +24,7 @@ public class Round1 {
         MediaPlayer Round1Music = new MediaPlayer(
                 new Media(new File("./src/resources/music/Challengers.mp3").toURI().toString()));
         Round1Music.setCycleCount(MediaPlayer.INDEFINITE);
-        Round1Music.setVolume(Round1Music.getVolume() / 3);
+        Round1Music.setVolume(Round1Music.getVolume() / 2);
         Round1Music.play();
         MediaView Round1mediaView = new MediaView(Round1Music);
 
