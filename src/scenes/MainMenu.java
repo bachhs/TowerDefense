@@ -1,39 +1,33 @@
 package scenes;
 
-import static constants.GlobalConstants.GAME_HEIGHT;
-import static constants.GlobalConstants.GAME_WIDTH;
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.Optional;
 
-import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
-import javax.swing.*;
+import static constants.GlobalConstants.GAME_HEIGHT;
+import static constants.GlobalConstants.GAME_WIDTH;
 
 enum MainMenuOption {
-    Start, Continue, Setting, Exit;
+    Start, Continue, Setting, Exit
 }
 
 public class MainMenu {
@@ -46,6 +40,7 @@ public class MainMenu {
         MediaPlayer mainMusic = new MediaPlayer(
                 new Media(new File("./src/resources/music/urf.mp3").toURI().toString()));
         mainMusic.setCycleCount(MediaPlayer.INDEFINITE);
+        mainMusic.setVolume(mainMusic.getVolume() / 2);
         mainMusic.play();
         MediaView mediaView = new MediaView(mainMusic);
 
@@ -85,8 +80,18 @@ public class MainMenu {
             menuOption.getChildren().add(button[i]);
         }
 
-        /////////////////////////////////////////
-        Button backbutton = new Button("Back");
+        button[MainMenuOption.Start.ordinal()].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                mainMusic.stop();
+                stage.setScene(Round1.getScene(stage));
+
+
+            }
+        });
+
+        Button backButton = new Button("Back");
         button[MainMenuOption.Setting.ordinal()].addEventHandler(MouseEvent.MOUSE_CLICKED,
                 new EventHandler<MouseEvent>() {
                     @Override
@@ -114,34 +119,33 @@ public class MainMenu {
                         label1.setScaleY(2);
                         label1.setTranslateX(-250);
 
-                        backbutton.setFont(Font.loadFont("file:./src/resources/font/OETZTYP_.TTF", 35));
-                        backbutton.setStyle("-fx-background-color:transparent; -fx-text-fill: #7FFF00");
-                        backbutton.setOnMouseEntered(new EventHandler<>() {
+                        backButton.setFont(Font.loadFont("file:./src/resources/font/OETZTYP_.TTF", 35));
+                        backButton.setStyle("-fx-background-color:transparent; -fx-text-fill: #7FFF00");
+                        backButton.setOnMouseEntered(new EventHandler<>() {
 
                             @Override
                             public void handle(MouseEvent t) {
-                                backbutton.setStyle("-fx-background-color:#FFF5EE; -fx-text-fill: #7FFF00 ");
+                                backButton.setStyle("-fx-background-color:#FFF5EE; -fx-text-fill: #7FFF00 ");
                             }
                         });
-                        backbutton.setOnMouseExited(new EventHandler<>() {
+                        backButton.setOnMouseExited(new EventHandler<>() {
 
                             @Override
                             public void handle(MouseEvent t) {
-                                backbutton.setStyle("-fx-background-color:transparent; -fx-text-fill: #7FFF00");
+                                backButton.setStyle("-fx-background-color:transparent; -fx-text-fill: #7FFF00");
                             }
                         });
 
-                        backbutton.setTranslateX(-540);
-                        backbutton.setTranslateY(-300);
+                        backButton.setTranslateX(-540);
+                        backButton.setTranslateY(-300);
 
                         StackPane stackPane = new StackPane();
                         stackPane.getChildren().addAll(new ImageView(new Image("./resources/img/MainBackground.jpg")),
-                                label1, volumeSlider,backbutton);
+                                label1, volumeSlider, backButton);
                         Scene setwal = new Scene(stackPane, GAME_WIDTH, GAME_HEIGHT);
                         stage.setScene(setwal);
                     }
                 });
-        ////////////////////////////////////////////////////
 
         button[MainMenuOption.Exit.ordinal()].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
@@ -168,7 +172,7 @@ public class MainMenu {
         stackPane.getChildren().addAll(mediaView, imageView, menuOption);
         Scene scenemain = new Scene(stackPane, GAME_WIDTH, GAME_HEIGHT);
 
-        backbutton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 stage.setScene(scenemain);

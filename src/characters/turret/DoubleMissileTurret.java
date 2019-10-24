@@ -2,6 +2,7 @@ package characters.turret;
 
 public class DoubleMissileTurret extends Turret {
     public DoubleMissileTurret() {
+        super();
         speed = 4;
         range = 8;
         damage = 80;

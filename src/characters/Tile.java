@@ -1,14 +1,16 @@
 package characters;
 
-public class Tile extends Entity {
-    protected int X;
-    protected int Y;
+import static constants.GlobalConstants.GAME_WIDTH;
 
-    public int getX() {
-        return X;
+public class Tile extends Entity {
+
+    public Tile(String imageURL) {
+        super(imageURL);
+        imageView.setFitWidth(GAME_WIDTH);
+        imageView.setPreserveRatio(true);
     }
 
-    public int getY() {
-        return Y;
+    public Tile() {
+
     }
 }

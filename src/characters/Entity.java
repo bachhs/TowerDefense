@@ -7,8 +7,13 @@ public abstract class Entity {
     protected Image image;
     protected ImageView imageView;
 
-    public Image getImage() {
-        return image;
+    public Entity(String imageURL) {
+        image = new Image(imageURL);
+        imageView = new ImageView(image);
+    }
+
+    public Entity() {
+
     }
 
     public ImageView getImageView() {
