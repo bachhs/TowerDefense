@@ -23,8 +23,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.Optional;
 
-import static constants.GlobalConstants.GAME_HEIGHT;
-import static constants.GlobalConstants.GAME_WIDTH;
+import static constants.GlobalConstants.*;
 
 enum MainMenuOption {
     Start, Continue, Setting, Exit
@@ -40,7 +39,7 @@ public class MainMenu {
         MediaPlayer mainMusic = new MediaPlayer(
                 new Media(new File("./src/resources/music/urf.mp3").toURI().toString()));
         mainMusic.setCycleCount(MediaPlayer.INDEFINITE);
-        mainMusic.setVolume(mainMusic.getVolume() / 2);
+        mainMusic.setVolume(mainMusic.getVolume() / MAIN_MUSIC);
         mainMusic.play();
         MediaView mediaView = new MediaView(mainMusic);
 
