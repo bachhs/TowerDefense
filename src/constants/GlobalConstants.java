@@ -12,7 +12,6 @@ public class GlobalConstants {
 
     static {
         File GameInfo = new File("TowerDefense.ini");
-        String info;
         try {
             if (!GameInfo.exists()) {
                 GameInfo.createNewFile();
@@ -21,8 +20,8 @@ public class GlobalConstants {
                 out.write("Round: " + ROUND + "\n");
                 out.write("MainMenu Music: " + MAIN_MUSIC + "\n");
                 out.write("Game Music: " + GAME_MUSIC + "\n");
-            }
-            else {
+                out.close();
+            } else {
                 BufferedReader in = new BufferedReader(new FileReader(GameInfo));
                 in.readLine();
                 String current;
@@ -30,18 +29,16 @@ public class GlobalConstants {
                     if (current.contains("Round:")) {
                         String[] roundInfo = current.split(" ");
                         ROUND = Integer.parseInt(roundInfo[roundInfo.length - 1]);
-                    }
-                    else if (current.contains("MainMenu Music:")) {
+                    } else if (current.contains("MainMenu Music:")) {
                         String[] mainMusicInfo = current.split(" ");
                         MAIN_MUSIC = Integer.parseInt(mainMusicInfo[mainMusicInfo.length - 1]);
-                    }
-                    else if (current.contains("Game Music: ")) {
+                    } else if (current.contains("Game Music: ")) {
                         String[] gameMusicInfo = current.split(" ");
                         GAME_MUSIC = Integer.parseInt(gameMusicInfo[gameMusicInfo.length - 1]);
                     }
+                in.close();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             ROUND = 1;
             MAIN_MUSIC = 3;
             GAME_MUSIC = 3;
