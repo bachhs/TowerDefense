@@ -49,4 +49,5 @@ public abstract class Enemy extends Entity {
     public boolean isDead() {
         return HP == 0;
     }
+
 }
