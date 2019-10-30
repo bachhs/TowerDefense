@@ -9,6 +9,8 @@ public class GlobalConstants {
     public static int ROUND = 1;
     public static int MAIN_MUSIC = 3;
     public static int GAME_MUSIC = 3;
+    public static final int GAME_SPEED = 100000;
+
 
     static {
         File GameInfo = new File("TowerDefense.ini");
