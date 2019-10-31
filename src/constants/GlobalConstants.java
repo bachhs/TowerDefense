@@ -11,18 +11,11 @@ public class GlobalConstants {
     public static int GAME_MUSIC = 3;
     public static final int GAME_SPEED = 100000;
 
-
     static {
         File GameInfo = new File("TowerDefense.ini");
         try {
             if (!GameInfo.exists()) {
-                GameInfo.createNewFile();
-                BufferedWriter out = new BufferedWriter(new FileWriter(GameInfo));
-                out.write("/*This is Setting for Tower Defense, do not modify*/\n");
-                out.write("Round: " + ROUND + "\n");
-                out.write("MainMenu Music: " + MAIN_MUSIC + "\n");
-                out.write("Game Music: " + GAME_MUSIC + "\n");
-                out.close();
+                update(ROUND, MAIN_MUSIC, GAME_MUSIC);
             } else {
                 BufferedReader in = new BufferedReader(new FileReader(GameInfo));
                 in.readLine();
@@ -44,6 +37,23 @@ public class GlobalConstants {
             ROUND = 1;
             MAIN_MUSIC = 3;
             GAME_MUSIC = 3;
+        }
+    }
+
+    public static void update(int round, int mainMusic, int gameMusic) {
+        ROUND = round;
+        MAIN_MUSIC = mainMusic;
+        GAME_MUSIC = gameMusic;
+        File GameInfo = new File("TowerDefense.ini");
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter(GameInfo));
+            out.write("/*This is Setting for Tower Defense, do not modify*/\n");
+            out.write("Round: " + ROUND + "\n");
+            out.write("MainMenu Music: " + MAIN_MUSIC + "\n");
+            out.write("Game Music: " + GAME_MUSIC + "\n");
+            out.close();
+        } catch (Exception e) {
+            System.out.print(e);
         }
     }
 

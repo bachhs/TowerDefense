@@ -3,8 +3,6 @@ package scenes;
 import characters.Tile;
 import characters.enemy.Chaser;
 import characters.enemy.Enemy;
-import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
 import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.event.EventHandler;
@@ -28,7 +26,7 @@ import static constants.GlobalConstants.*;
 public class Round1 {
     public static Scene getScene(Stage stage) {
         // tạo enemy
-        //Enemy chaser = new Chaser("./resources/img/Chaser.png");
+        // Enemy chaser = new Chaser("./resources/img/Chaser.png");
         ArrayList<Enemy> listchaser = new ArrayList<>(5);
         ArrayList<Path> ChaserMove = new ArrayList<>(5);
 
@@ -56,19 +54,20 @@ public class Round1 {
             listchaser.add(new Chaser("./resources/img/Chaser.png"));
             Path pt = createPath();
             ChaserMove.add(pt);
-            listpt.add(new PathTransition(Duration.millis(GAME_SPEED/listchaser.get(i).getSpeed()), ChaserMove.get(i), listchaser.get(i).getImageView()));
+            listpt.add(new PathTransition(Duration.millis(GAME_SPEED / listchaser.get(i).getSpeed()), ChaserMove.get(i),
+                    listchaser.get(i).getImageView()));
             listpt.get(i).setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
             listpt.get(i).setAutoReverse(false);
         }
 
-        System.out.println(listchaser.size() + "," +listpt.size() + "+" + ChaserMove.size());
+        System.out.println(listchaser.size() + "," + listpt.size() + "+" + ChaserMove.size());
         listpt.get(0).play();
         pause.play();
         listpt.get(1).play();
 
         StackPane R1StackPane = new StackPane();
         R1StackPane.getChildren().addAll(Round1mediaView, gameBackground);
-        for(int i =0; i< 5; i++) {
+        for (int i = 0; i < 5; i++) {
             R1StackPane.getChildren().add(listchaser.get(i).getImageView());
         }
 
