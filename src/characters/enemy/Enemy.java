@@ -17,7 +17,8 @@ public abstract class Enemy extends Entity {
         this.imagePath = imagePath;
         image = new Image(imagePath);
         imageView = new ImageView(image);
-        imageView.setRotate(-90);
+        imageView.setTranslateX(-325);
+        imageView.setTranslateY(500);
     }
 
     public int getHP() {
