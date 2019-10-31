@@ -79,16 +79,16 @@ public class MainMenu {
             menuOption.getChildren().add(button[i]);
         }
 
-        button[MainMenuOption.Start.ordinal()].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        button[MainMenuOption.Start.ordinal()].addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
 
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                mainMusic.stop();
-                stage.setScene(Round1.getScene(stage));
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        mainMusic.stop();
+                        stage.setScene(Round1.getScene(stage));
 
-
-            }
-        });
+                    }
+                });
 
         Button backButton = new Button("Back");
         button[MainMenuOption.Setting.ordinal()].addEventHandler(MouseEvent.MOUSE_CLICKED,
@@ -109,6 +109,8 @@ public class MainMenu {
                             @Override
                             public void invalidated(Observable observable) {
                                 mainMusic.setVolume(volumeSlider.getValue() / 100);
+                                constants.GlobalConstants.update(ROUND, (int) (100 / volumeSlider.getValue()),
+                                        GAME_MUSIC);
                             }
                         });
                         Label label1 = new Label("Volume Bar");
@@ -178,6 +180,6 @@ public class MainMenu {
             }
         });
 
-        return  scenemain;
+        return scenemain;
     }
 }
