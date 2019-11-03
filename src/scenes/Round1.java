@@ -4,12 +4,9 @@ import characters.Tile;
 import characters.enemy.Chaser;
 import characters.enemy.Enemy;
 import characters.enemy.HUNK;
-import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.PathTransition;
-import javafx.animation.PauseTransition;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -23,14 +20,13 @@ import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import static constants.GlobalConstants.*;
 
 public class Round1 {
     public static Scene getScene(Stage stage) {
         Enemy chaser = new Chaser("./resources/img/Chaser.png");
-        Enemy hunk = new HUNK("./resources/img/HUNK.png");
+        Enemy hunk = new Chaser("./resources/img/Chaser.png");
         Path pt = createPath();
 
         StackPane gameBackground = new StackPane();
