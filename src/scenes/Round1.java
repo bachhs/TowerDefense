@@ -1,6 +1,7 @@
 package scenes;
 
 import characters.Tile;
+import characters.enemy.ActionDemo;
 import characters.enemy.Chaser;
 import characters.enemy.Enemy;
 import characters.enemy.HUNK;
@@ -22,6 +23,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -29,9 +31,9 @@ import static constants.GlobalConstants.*;
 
 public class Round1 {
     public static Scene getScene(Stage stage) {
-        Enemy chaser = new Chaser("./resources/img/Chaser.png");
-        Enemy hunk = new HUNK("./resources/img/HUNK.png");
-        Path pt = createPath();
+        Enemy chaser = new Chaser();
+        Enemy hunk = new HUNK();
+        //Path pt = createPath();
 
         StackPane gameBackground = new StackPane();
         Tile mountain = new Tile("./resources/img/Round1_backGround.png");
@@ -51,6 +53,7 @@ public class Round1 {
             }
         });
 
+        /**
         PathTransition move1 = new PathTransition(Duration.millis(GAME_SPEED / chaser.getSpeed()), pt,
                 chaser.getImageView());
         PathTransition move2 = new PathTransition(Duration.millis(GAME_SPEED / hunk.getSpeed()), pt,
@@ -82,10 +85,15 @@ public class Round1 {
                 }
             }
         };
-        h.start();
+        h.start(); **/
+
+
 
         StackPane R1StackPane = new StackPane();
-        R1StackPane.getChildren().addAll(Round1mediaView, gameBackground, chaser.getImageView(), hunk.getImageView());
+        R1StackPane.getChildren().addAll(Round1mediaView, gameBackground);
+        ActionDemo demo = new ActionDemo(chaser,2);
+        demo.Update(R1StackPane, createPath());
+
 
         return new Scene(R1StackPane, GAME_WIDTH, GAME_HEIGHT);
     }

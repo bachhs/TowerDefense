@@ -1,10 +1,16 @@
 package characters.enemy;
 
 import characters.Entity;
+import javafx.animation.PathTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
 
-public abstract class Enemy extends Entity {
+import static constants.GlobalConstants.GAME_SPEED;
+
+public abstract class Enemy extends Entity  {
     protected int HP;
     protected int speed;
     protected int armor;
@@ -46,6 +52,14 @@ public abstract class Enemy extends Entity {
             HP = HP - dec;
         else
             HP = 0;
+    }
+
+    public void move(StackPane pane, Path pt) {
+        PathTransition move1 = new PathTransition(Duration.millis(GAME_SPEED/speed), pt, getImageView());
+        move1.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        move1.setAutoReverse(false);
+        pane.getChildren().add(getImageView());
+        move1.play();
     }
 
     public boolean isDead() {

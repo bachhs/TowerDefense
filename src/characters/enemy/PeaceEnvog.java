@@ -1,8 +1,8 @@
 package characters.enemy;
 
 public class PeaceEnvog extends Enemy {
-    public PeaceEnvog(String imagePath) {
-        super(imagePath);
+    public PeaceEnvog() {
+        super("./resources/img/PeaceEnvog.png");
         HP = 70;
         speed = 2;
         armor = 50;

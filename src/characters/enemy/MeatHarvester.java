@@ -1,8 +1,8 @@
 package characters.enemy;
 
 public class MeatHarvester extends Enemy {
-    public MeatHarvester(String imagePath) {
-        super(imagePath);
+    public MeatHarvester() {
+        super("./resources/img/MeatHarvester.png");
         HP = 15;
         speed = 8;
         armor = 15;
