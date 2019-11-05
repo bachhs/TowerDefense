@@ -11,8 +11,4 @@ public abstract class Turret extends Tile {
     public Turret(String imageURL) {
         super(imageURL);
     }
-
-    public Turret() {
-        super();
-    }
 }

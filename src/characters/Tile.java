@@ -9,8 +9,4 @@ public class Tile extends Entity {
         imageView.setFitWidth(GAME_WIDTH);
         imageView.setPreserveRatio(true);
     }
-
-    public Tile() {
-
-    }
 }

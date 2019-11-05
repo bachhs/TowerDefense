@@ -1,8 +1,9 @@
 package characters.enemy;
 
 public class Chaser extends Enemy {
+    private static final String path = "./resources/img/Chaser.png";
     public Chaser() {
-        super("./resources/img/Chaser.png");
+        super(path);
         HP = 20;
         speed = 5;
         armor = 10;

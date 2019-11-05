@@ -12,10 +12,6 @@ public abstract class Entity {
         imageView = new ImageView(image);
     }
 
-    public Entity() {
-
-    }
-
     public ImageView getImageView() {
         return imageView;
     }

@@ -1,8 +1,10 @@
 package characters.turret;
 
 public class DoubleMissileTurret extends Turret {
+    private static final String path = "";
+
     public DoubleMissileTurret() {
-        super();
+        super(path);
         speed = 4;
         range = 8;
         damage = 80;

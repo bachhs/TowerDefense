@@ -2,27 +2,21 @@ package characters.enemy;
 
 import characters.Entity;
 import javafx.animation.PathTransition;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
 import static constants.GlobalConstants.GAME_SPEED;
 
-public abstract class Enemy extends Entity  {
+public class Enemy extends Entity {
     protected int HP;
     protected int speed;
     protected int armor;
     protected int score;
     protected int damage;
-    protected String imagePath;
 
     public Enemy(String imagePath) {
-        super();
-        this.imagePath = imagePath;
-        image = new Image(imagePath);
-        imageView = new ImageView(image);
+        super(imagePath);
         imageView.setTranslateX(-325);
         imageView.setTranslateY(500);
     }

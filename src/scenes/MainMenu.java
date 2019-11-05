@@ -85,7 +85,12 @@ public class MainMenu {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         mainMusic.stop();
-                        stage.setScene(Round1.getScene(stage));
+                        if (ROUND == 3)
+                            stage.setScene(Round1.getScene(stage));
+                        else if (ROUND == 2)
+                            stage.setScene(Round2.getScene(stage));
+                        else
+                            stage.setScene(Round1.getScene(stage));
 
                     }
                 });

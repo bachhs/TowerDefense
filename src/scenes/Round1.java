@@ -1,39 +1,24 @@
 package scenes;
 
 import characters.Tile;
-import characters.enemy.ActionDemo;
-import characters.enemy.Chaser;
-import characters.enemy.Enemy;
-import characters.enemy.HUNK;
-import javafx.animation.Animation;
+import characters.enemy.*;
 import javafx.animation.AnimationTimer;
-import javafx.animation.PathTransition;
-import javafx.animation.PauseTransition;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.stage.Stage;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
-import javafx.util.Duration;
+import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
 
 import static constants.GlobalConstants.*;
 
 public class Round1 {
     public static Scene getScene(Stage stage) {
-        Enemy chaser = new Chaser();
-        Enemy hunk = new HUNK();
-        //Path pt = createPath();
 
         StackPane gameBackground = new StackPane();
         Tile mountain = new Tile("./resources/img/Round1_backGround.png");
@@ -46,54 +31,38 @@ public class Round1 {
         Round1Music.play();
         MediaView Round1mediaView = new MediaView(Round1Music);
 
-        gameBackground.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                System.out.println("(" + mouseEvent.getX() + "," + mouseEvent.getY() + ")");
-            }
-        });
-
-        /**
-        PathTransition move1 = new PathTransition(Duration.millis(GAME_SPEED / chaser.getSpeed()), pt,
-                chaser.getImageView());
-        PathTransition move2 = new PathTransition(Duration.millis(GAME_SPEED / hunk.getSpeed()), pt,
-                hunk.getImageView());
-        move1.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        move2.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        move1.setAutoReverse(false);
-        move2.setAutoReverse(false);
-        Enemy[] enemies = new Enemy[2];
-        enemies[0] = chaser;
-        enemies[1] = hunk;
-
-        PathTransition[] moves = new PathTransition[] { move1, move2 };
-
-        AnimationTimer h = new AnimationTimer() {
-            int i = 0;
-
-            private long lastUpdate = System.currentTimeMillis();
-
-            @Override
-            public void handle(long now) {
-                long elapsedSeconds = (System.currentTimeMillis() - lastUpdate) / 1000;
-                if (elapsedSeconds == 1) {
-                    lastUpdate = System.currentTimeMillis();
-                    if (i < 2) {
-                        moves[i++].play();
-                    }
-
-                }
-            }
-        };
-        h.start(); **/
-
-
 
         StackPane R1StackPane = new StackPane();
         R1StackPane.getChildren().addAll(Round1mediaView, gameBackground);
-        ActionDemo demo = new ActionDemo(chaser,2);
-        demo.Update(R1StackPane, createPath());
 
+        ChaserWave chaserWave = new ChaserWave(new Chaser(), 3, R1StackPane, createPath());
+        HUNKwave hunKwave = new HUNKwave(new Hunk(), 4, R1StackPane, createPath());
+        MeatHarvesterWave meatHarvesterWave = new MeatHarvesterWave(new MeatHarvester(), 2, R1StackPane, createPath());
+        PeaceEnvogWave peaceEnvogWave = new PeaceEnvogWave(new PeaceEnvog(), 3, R1StackPane, createPath());
+
+        AnimationTimer animationTimer = new AnimationTimer() {
+            long time = 0;
+
+            @Override
+            public void handle(long l) {
+                if (time == 0) {
+                    time = l;
+                    System.out.println(l);
+                    System.out.println(System.currentTimeMillis());
+                    chaserWave.move();
+                    return;
+                }
+                long delta = l - time;
+                time = l;
+                double dis = delta / 1.0e9;
+
+                if (dis > 1000) {
+                    hunKwave.move();
+                    System.out.println(l);
+                }
+            }
+        };
+        animationTimer.start();
 
         return new Scene(R1StackPane, GAME_WIDTH, GAME_HEIGHT);
     }
