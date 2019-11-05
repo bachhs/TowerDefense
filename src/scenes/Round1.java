@@ -31,7 +31,6 @@ public class Round1 {
         Round1Music.play();
         MediaView Round1mediaView = new MediaView(Round1Music);
 
-
         StackPane R1StackPane = new StackPane();
         R1StackPane.getChildren().addAll(Round1mediaView, gameBackground);
 
