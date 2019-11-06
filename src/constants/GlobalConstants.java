@@ -6,10 +6,12 @@ public class GlobalConstants {
     public static final String GAME_NAME = "Tower Defense";
     public static final int GAME_WIDTH = 1280;
     public static final int GAME_HEIGHT = (GAME_WIDTH / 16) * 9;
+    public static final int BOUND_X = GAME_WIDTH / 2;
+    public static final int BOUND_Y = GAME_HEIGHT / 2;
     public static int ROUND = 1;
     public static int MAIN_MUSIC = 3;
     public static int GAME_MUSIC = 3;
-    public static final int GAME_SPEED = 70000;
+    public static final int GAME_SPEED = 50000;
 
     static {
         File GameInfo = new File("TowerDefense.ini");

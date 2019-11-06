@@ -2,12 +2,20 @@ package scenes;
 
 import characters.Tile;
 import characters.enemy.*;
+import characters.turret.BlastMissileTurret;
+import characters.turret.Turret;
+import constants.GlobalConstants;
 import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -19,10 +27,7 @@ import static constants.GlobalConstants.*;
 
 public class Round1 {
     public static Scene getScene(Stage stage) {
-
-        StackPane gameBackground = new StackPane();
-        Tile mountain = new Tile("./resources/img/Round1_backGround.png");
-        gameBackground.getChildren().add(mountain.getImageView());
+        Tile gameBackground = new Tile("./resources/img/Round1_backGround.png");
 
         MediaPlayer Round1Music = new MediaPlayer(
                 new Media(new File("./src/resources/music/Challengers.mp3").toURI().toString()));
@@ -32,36 +37,46 @@ public class Round1 {
         MediaView Round1mediaView = new MediaView(Round1Music);
 
         StackPane R1StackPane = new StackPane();
-        R1StackPane.getChildren().addAll(Round1mediaView, gameBackground);
+        R1StackPane.getChildren().addAll(Round1mediaView, gameBackground.getImageView());
 
         ChaserWave chaserWave = new ChaserWave(new Chaser(), 3, R1StackPane, createPath());
         HUNKwave hunKwave = new HUNKwave(new Hunk(), 4, R1StackPane, createPath());
         MeatHarvesterWave meatHarvesterWave = new MeatHarvesterWave(new MeatHarvester(), 2, R1StackPane, createPath());
         PeaceEnvogWave peaceEnvogWave = new PeaceEnvogWave(new PeaceEnvog(), 3, R1StackPane, createPath());
 
-        AnimationTimer animationTimer = new AnimationTimer() {
-            long time = 0;
-
+        Turret turret = new BlastMissileTurret();
+        turret.setTranslateXY(-190, 90);
+        /*R1StackPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(long l) {
-                if (time == 0) {
-                    time = l;
-                    System.out.println(l);
-                    System.out.println(System.currentTimeMillis());
-                    chaserWave.move();
-                    return;
-                }
-                long delta = l - time;
-                time = l;
-                double dis = delta / 1.0e9;
-
-                if (dis > 1000) {
-                    hunKwave.move();
-                    System.out.println(l);
-                }
+            public void handle(MouseEvent mouseEvent) {
+                turret.setRotate(mouseEvent.getX() - BOUND_X, mouseEvent.getY() - BOUND_Y);
+                System.out.println(mouseEvent.getX());
             }
-        };
-        animationTimer.start();
+        });*/
+
+
+        chaserWave.move(turret);
+
+
+        R1StackPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println(mouseEvent.getX() + "," + mouseEvent.getY());
+            }
+        });
+
+        R1StackPane.getChildren().add(turret.getNode());
+        turret.addEventHandler(MouseEvent.ANY, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Circle rangeCircle = new Circle(turret.getRange() * 20);
+                rangeCircle.setTranslateX(-190);
+                rangeCircle.setTranslateY(90);
+                rangeCircle.setFill(Color.TRANSPARENT);
+                rangeCircle.setStroke(Color.BLUE);
+                R1StackPane.getChildren().add(rangeCircle);
+            }
+        });
 
         return new Scene(R1StackPane, GAME_WIDTH, GAME_HEIGHT);
     }

@@ -17,8 +17,6 @@ public class Enemy extends Entity {
 
     public Enemy(String imagePath) {
         super(imagePath);
-        imageView.setTranslateX(-325);
-        imageView.setTranslateY(500);
     }
 
     public int getHP() {

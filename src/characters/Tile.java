@@ -6,7 +6,10 @@ public class Tile extends Entity {
 
     public Tile(String imageURL) {
         super(imageURL);
-        imageView.setFitWidth(GAME_WIDTH);
-        imageView.setPreserveRatio(true);
+    }
+
+    public void setTranslateXY(double x, double y) {
+        this.imageView.setTranslateX(x);
+        this.imageView.setTranslateY(y);
     }
 }

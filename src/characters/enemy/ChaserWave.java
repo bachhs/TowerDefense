@@ -1,6 +1,9 @@
 package characters.enemy;
 
+import characters.turret.Turret;
 import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Path;
 
@@ -12,7 +15,7 @@ public class ChaserWave {
     private StackPane pane;
     private Path path;
 
-    private ArrayList<Chaser> enemies;
+    private ArrayList<Enemy> enemies;
 
     public ChaserWave(Chaser enemyType, int enemyPerWave, StackPane pane, Path path) {
         this.enemyType = enemyType;
@@ -34,7 +37,7 @@ public class ChaserWave {
         }
     }
 
-    public void move() {
+    public void move(Turret turret) {
         AnimationTimer h = new AnimationTimer() {
             int i = 0;
             private long lastUpdate = System.currentTimeMillis();
@@ -47,10 +50,14 @@ public class ChaserWave {
                     if (i < enemyPerWave) {
                         enemies.get(i++).move(pane, path);
                     }
-
                 }
+                System.out.println(enemies.get(0).getTranslateX() + ";" + enemies.get(0).getTranslateY());
+                turret.setRotate(enemies.get(0).getTranslateX(), enemies.get(0).getTranslateY());
             }
         };
         h.start();
     }
+
+
+
 }
