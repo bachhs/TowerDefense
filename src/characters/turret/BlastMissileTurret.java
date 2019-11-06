@@ -12,7 +12,7 @@ public class BlastMissileTurret extends Turret {
         super(path);
         cannon = new ImageView(new Image(link));
         speed = 4;
-        range = 10;
+        range = 240;
         damage = 50;
         score = 35;
     }

@@ -6,7 +6,6 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 public class Turret extends Tile {
@@ -43,10 +42,15 @@ public class Turret extends Tile {
 
     public void setRotate(double x, double y) {
         if (cannon != null) {
-            double angle = Math.toDegrees(Math.atan2(y - cannon.getY() + 360, x - cannon.getX() + 640));
+            double angle = Math.toDegrees(Math.atan2(y - cannon.getTranslateY() , x - cannon.getTranslateX()))+90;
             cannon.setRotate(angle);
         }
     }
+
+    public double getDistance(double x, double y) {
+            return Math.sqrt((x - cannon.getTranslateX())*(x - cannon.getTranslateX()) + (y - cannon.getTranslateY())*(y - cannon.getTranslateY()));
+    }
+
 
     @Override
     public void setTranslateXY(double x, double y) {

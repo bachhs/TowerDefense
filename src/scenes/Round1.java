@@ -4,10 +4,7 @@ import characters.Tile;
 import characters.enemy.*;
 import characters.turret.BlastMissileTurret;
 import characters.turret.Turret;
-import constants.GlobalConstants;
-import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -45,7 +42,7 @@ public class Round1 {
         PeaceEnvogWave peaceEnvogWave = new PeaceEnvogWave(new PeaceEnvog(), 3, R1StackPane, createPath());
 
         Turret turret = new BlastMissileTurret();
-        turret.setTranslateXY(-190, 90);
+        turret.setTranslateXY(-240, 65);
         /*R1StackPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -69,9 +66,9 @@ public class Round1 {
         turret.addEventHandler(MouseEvent.ANY, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                Circle rangeCircle = new Circle(turret.getRange() * 20);
-                rangeCircle.setTranslateX(-190);
-                rangeCircle.setTranslateY(90);
+                Circle rangeCircle = new Circle(turret.getRange());
+                rangeCircle.setTranslateX(-240);
+                rangeCircle.setTranslateY(65);
                 rangeCircle.setFill(Color.TRANSPARENT);
                 rangeCircle.setStroke(Color.BLUE);
                 R1StackPane.getChildren().add(rangeCircle);

@@ -1,8 +1,6 @@
 package characters;
 
-import constants.GlobalConstants;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,13 +24,5 @@ public abstract class Entity {
 
     public ImageView getImageView() {
         return imageView;
-    }
-
-    public double getTranslateX() {
-        return imageView.getTranslateX() + GlobalConstants.BOUND_X;
-    }
-
-    public double getTranslateY() {
-        return imageView.getTranslateY() + GlobalConstants.BOUND_Y;
     }
 }

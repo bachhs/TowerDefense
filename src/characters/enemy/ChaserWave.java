@@ -2,8 +2,6 @@ package characters.enemy;
 
 import characters.turret.Turret;
 import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Path;
 
@@ -40,19 +38,21 @@ public class ChaserWave {
     public void move(Turret turret) {
         AnimationTimer h = new AnimationTimer() {
             int i = 0;
+            int j = 1;
             private long lastUpdate = System.currentTimeMillis();
 
             @Override
             public void handle(long now) {
                 long elapsedSeconds = (System.currentTimeMillis() - lastUpdate) / 1000;
-                if (elapsedSeconds == 4) {
+                if (elapsedSeconds == 3) {
                     lastUpdate = System.currentTimeMillis();
                     if (i < enemyPerWave) {
                         enemies.get(i++).move(pane, path);
                     }
                 }
-                System.out.println(enemies.get(0).getTranslateX() + ";" + enemies.get(0).getTranslateY());
-                turret.setRotate(enemies.get(0).getTranslateX(), enemies.get(0).getTranslateY());
+                if (turret.getDistance(enemies.get(j).getImageView().getTranslateX(), enemies.get(j).getImageView().getTranslateY()) <= turret.getRange()) {
+                    turret.setRotate(enemies.get(j).getImageView().getTranslateX(), enemies.get(j).getImageView().getTranslateY());
+                }
             }
         };
         h.start();
