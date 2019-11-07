@@ -50,9 +50,7 @@ public class ChaserWave {
                         enemies.get(i++).move(pane, path);
                     }
                 }
-                if (turret.getDistance(enemies.get(j).getImageView().getTranslateX(), enemies.get(j).getImageView().getTranslateY()) <= turret.getRange()) {
-                    turret.setRotate(enemies.get(j).getImageView().getTranslateX(), enemies.get(j).getImageView().getTranslateY());
-                }
+                    turret.setRoTate(enemies.get(0));
             }
         };
         h.start();
