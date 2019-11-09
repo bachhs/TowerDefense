@@ -2,9 +2,12 @@ package characters.enemy;
 
 import characters.Entity;
 import javafx.animation.PathTransition;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
+
+import java.util.List;
 
 import static constants.GlobalConstants.GAME_SPEED;
 
@@ -18,6 +21,13 @@ public class Enemy extends Entity {
 
     public Enemy(String imagePath) {
         super(imagePath);
+        imageView.setTranslateX(1000);
+        imageView.setTranslateY(1000);
+        healthBar.relocate(1000, 1000);
+        healthBar.setScaleX(0.7);
+        healthBar.setScaleY(0.7);
+        healthBar.setProgress(74, 100);
+
     }
 
     public int getHP() {
@@ -45,15 +55,20 @@ public class Enemy extends Entity {
             HP = HP - dec;
         else
             HP = 0;
+
     }
 
-    public void move(StackPane pane, Path pt) {
+    public void move(Pane pane, Path pt) {
         PathTransition move1 = new PathTransition(Duration.millis(GAME_SPEED / speed), pt, getImageView());
         move1.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         move1.setAutoReverse(false);
         move1.play();
         pane.getChildren().add(getImageView());
-        pane.getChildren().add(this.healthBar);
+    }
+
+    public void relocateHealthBar(double x, double y) {
+        healthBar.setTranslateX(x);
+        healthBar.setTranslateY(y - 50);
     }
 
     public boolean isDead() {

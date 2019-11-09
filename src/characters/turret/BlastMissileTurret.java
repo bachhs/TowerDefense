@@ -2,7 +2,6 @@ package characters.turret;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Circle;
 
 public class BlastMissileTurret extends Turret {
 
@@ -13,7 +12,7 @@ public class BlastMissileTurret extends Turret {
         super(path);
         cannon = new ImageView(new Image(link));
         speed = 4;
-        setRange(220);
+        setRange(250);
         damage = 50;
         score = 35;
     }

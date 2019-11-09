@@ -53,8 +53,6 @@ public class WaveManage {
         enemies.add(new PeaceEnvog());
     }
 
-
-
     public void Update() {
         int count = 0;
         enemies.add(CenemyType);

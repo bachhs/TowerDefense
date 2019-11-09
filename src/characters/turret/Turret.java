@@ -15,13 +15,12 @@ import javafx.scene.shape.Circle;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Turret extends Tile {
+public abstract class Turret extends Tile {
 
     protected int speed = 0;
     protected double range = 0;
     protected int damage = 0;
     protected int score = 0;
-    protected ArrayList<Enemy> enemies;
     protected ImageView cannon;
     protected Circle rangeCircle;
 
@@ -53,11 +52,6 @@ public class Turret extends Tile {
         return score;
     }
 
-    public List<Enemy> getEnemies() {
-        enemies = new ArrayList<>();
-        return enemies;
-    }
-
     public void setRotate(Enemy e) {
         cannon.setRotate(getAngle(e));
     }
@@ -78,7 +72,8 @@ public class Turret extends Tile {
 
     public void checkingEnemy(List<Enemy> enemies) {
         int i = 0;
-        setRotate(enemies.get(i));
+        if(isInRange(enemies.get(i)))
+                setRotate(enemies.get(i));
         for (i = 0; i < enemies.size() - 1; i++) {
             if (!isInRange(enemies.get(i))) {
                 if (isInRange(enemies.get(i + 1)))
@@ -119,7 +114,7 @@ public class Turret extends Tile {
         cannon.addEventHandler(MouseEvent.MOUSE_ENTERED, rangeEntered);
         cannon.addEventHandler(MouseEvent.MOUSE_EXITED, rangeExited);
 
-        castle.getChildren().addAll(rangeCircle, imageView, cannon);
+        castle.getChildren().addAll(rangeCircle, imageView);
         return castle;
     }
 

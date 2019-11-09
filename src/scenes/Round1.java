@@ -40,15 +40,16 @@ public class Round1 {
         MeatHarvesterWave meatHarvesterWave = new MeatHarvesterWave(new MeatHarvester(), 2, R1StackPane, createPath());
         PeaceEnvogWave peaceEnvogWave = new PeaceEnvogWave(new PeaceEnvog(), 3, R1StackPane, createPath());
 
-        WaveManage waveManage = new WaveManage(new Chaser(), 3, new Hunk(), 4, new MeatHarvester(), 2, new PeaceEnvog(),
-                1, R1StackPane, createPath());
 
-        Turret turret = new BlastMissileTurret();
-        turret.setTranslateXY(-240, 65);
+        Controller controller = new Controller(R1StackPane, createPath());
+        controller.start();
 
-        waveManage.move(turret);
-
-        R1StackPane.getChildren().add(turret.getNode());
+        R1StackPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println(mouseEvent.getX() + "," + mouseEvent.getY());
+            }
+        });
 
         return new Scene(R1StackPane, GAME_WIDTH, GAME_HEIGHT);
     }
