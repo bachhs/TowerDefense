@@ -93,12 +93,14 @@ public class WaveManage {
                     lastUpdate = System.currentTimeMillis();
                     if (i < CenemyPerTurn) {
                         enemies.get(i++).move(pane,path);
+
                     }
                 }
 
                 if (elapsedSeconds == 3) {
                     lastUpdate = System.currentTimeMillis();
                     if (i < HenemyPerTurn + CenemyPerTurn) {
+                        System.out.println(enemies.get(i).getImageView().getX() - 5);
                         enemies.get(i++).move(pane,path);
                     }
                 }
@@ -106,6 +108,7 @@ public class WaveManage {
                 if (elapsedSeconds == 4) {
                     lastUpdate = System.currentTimeMillis();
                     if (i < HenemyPerTurn + MenemyPerTurn + CenemyPerTurn) {
+                        System.out.println(enemies.get(i).getImageView().getX() - 5);
                         enemies.get(i++).move(pane,path);
                     }
                 }

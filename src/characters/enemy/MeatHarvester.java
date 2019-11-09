@@ -2,6 +2,8 @@ package characters.enemy;
 
 public class MeatHarvester extends Enemy {
     private static final String path = "./resources/img/MeatHarvester.png";
+    private static final int MAX_HP = 0;
+    
     public MeatHarvester() {
         super(path);
         HP = 15;

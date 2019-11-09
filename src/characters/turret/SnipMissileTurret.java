@@ -7,6 +7,7 @@ public class SnipMissileTurret extends Turret {
         super(path);
         speed = 2;
         range = 25;
+        rangeCircle.setRadius(range);
         damage = 110;
         score = 80;
     }

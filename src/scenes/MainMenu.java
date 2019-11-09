@@ -176,15 +176,15 @@ public class MainMenu {
 
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(mediaView, imageView, menuOption);
-        Scene scenemain = new Scene(stackPane, GAME_WIDTH, GAME_HEIGHT);
+        Scene sceneMain = new Scene(stackPane, GAME_WIDTH, GAME_HEIGHT);
 
         backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                stage.setScene(scenemain);
+                stage.setScene(sceneMain);
             }
         });
 
-        return scenemain;
+        return sceneMain;
     }
 }

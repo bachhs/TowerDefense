@@ -20,11 +20,13 @@ import java.io.File;
 import static constants.GlobalConstants.*;
 
 public class Round1 {
-    public static Scene getScene(Stage stage) {
-        Tile gameBackground = new Tile("./resources/img/Round1_backGround.png");
 
-        MediaPlayer Round1Music = new MediaPlayer(
-                new Media(new File("./src/resources/music/Challengers.mp3").toURI().toString()));
+    private static final String ROUND_BACKGROUND = "./resources/img/Round1_backGround.png";
+
+    public static Scene getScene(Stage stage) {
+        Tile gameBackground = new Tile(ROUND_BACKGROUND);
+
+        MediaPlayer Round1Music = new MediaPlayer(new Media(new File(GAME_MUSIC_URL).toURI().toString()));
         Round1Music.setCycleCount(MediaPlayer.INDEFINITE);
         Round1Music.setVolume(Round1Music.getVolume() / GAME_MUSIC);
         Round1Music.play();
@@ -38,33 +40,15 @@ public class Round1 {
         MeatHarvesterWave meatHarvesterWave = new MeatHarvesterWave(new MeatHarvester(), 2, R1StackPane, createPath());
         PeaceEnvogWave peaceEnvogWave = new PeaceEnvogWave(new PeaceEnvog(), 3, R1StackPane, createPath());
 
-        WaveManage waveManage = new WaveManage(new Chaser(), 3, new Hunk(), 4, new MeatHarvester(), 2, new PeaceEnvog(),1, R1StackPane, createPath());
+        WaveManage waveManage = new WaveManage(new Chaser(), 3, new Hunk(), 4, new MeatHarvester(), 2, new PeaceEnvog(),
+                1, R1StackPane, createPath());
 
         Turret turret = new BlastMissileTurret();
         turret.setTranslateXY(-240, 65);
 
         waveManage.move(turret);
 
-
-        R1StackPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                System.out.println(mouseEvent.getX() + "," + mouseEvent.getY());
-            }
-        });
-
         R1StackPane.getChildren().add(turret.getNode());
-        turret.addEventHandler(MouseEvent.ANY, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                Circle rangeCircle = new Circle(turret.getRange());
-                rangeCircle.setTranslateX(-240);
-                rangeCircle.setTranslateY(65);
-                rangeCircle.setFill(Color.TRANSPARENT);
-                rangeCircle.setStroke(Color.BLUE);
-                R1StackPane.getChildren().add(rangeCircle);
-            }
-        });
 
         return new Scene(R1StackPane, GAME_WIDTH, GAME_HEIGHT);
     }
@@ -72,7 +56,7 @@ public class Round1 {
     public static Path createPath() {
         Path path = new Path();
         MoveTo spawn = new MoveTo(-325.0, 500.0);
-        CubicCurveTo cubicCurveTo = new CubicCurveTo( -325, 0,-320, 0, -240, -10);
+        CubicCurveTo cubicCurveTo = new CubicCurveTo(-325, 0, -320, 0, -240, -10);
         LineTo line = new LineTo(800.0, -10.0);
         path.getElements().addAll(spawn, cubicCurveTo, line);
         return path;

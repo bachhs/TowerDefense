@@ -7,6 +7,7 @@ public class DoubleMissileTurret extends Turret {
         super(path);
         speed = 4;
         range = 8;
+        rangeCircle.setRadius(range);
         damage = 80;
         score = 50;
     }

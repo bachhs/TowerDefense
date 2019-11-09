@@ -9,6 +9,7 @@ import javafx.util.Duration;
 import static constants.GlobalConstants.GAME_SPEED;
 
 public class Enemy extends Entity {
+    public HealthBar healthBar = new HealthBar();
     protected int HP;
     protected int speed;
     protected int armor;
@@ -47,11 +48,12 @@ public class Enemy extends Entity {
     }
 
     public void move(StackPane pane, Path pt) {
-        PathTransition move1 = new PathTransition(Duration.millis(GAME_SPEED/speed), pt, getImageView());
+        PathTransition move1 = new PathTransition(Duration.millis(GAME_SPEED / speed), pt, getImageView());
         move1.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         move1.setAutoReverse(false);
-        pane.getChildren().add(getImageView());
         move1.play();
+        pane.getChildren().add(getImageView());
+        pane.getChildren().add(this.healthBar);
     }
 
     public boolean isDead() {

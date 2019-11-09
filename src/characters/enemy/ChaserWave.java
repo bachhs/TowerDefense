@@ -50,7 +50,7 @@ public class ChaserWave {
                         enemies.get(i++).move(pane, path);
                     }
                 }
-                    turret.setRoTate(enemies.get(0));
+                    turret.setRotate(enemies.get(0));
             }
         };
         h.start();

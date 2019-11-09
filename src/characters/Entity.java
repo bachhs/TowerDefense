@@ -13,13 +13,6 @@ public abstract class Entity {
         image = new Image(imageURL);
         imageView = new ImageView(image);
         imageView.setPreserveRatio(true);
-        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                System.out.println(imageView.getTranslateX());
-            }
-        };
-        imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
     }
 
     public ImageView getImageView() {
