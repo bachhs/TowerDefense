@@ -1,15 +1,10 @@
 package scenes;
 
-import characters.enemy.Chaser;
-import characters.enemy.Enemy;
-import characters.enemy.Hunk;
-import characters.enemy.MeatHarvester;
-import characters.enemy.PeaceEnvog;
+import characters.enemy.*;
 import characters.turret.BlastMissileTurret;
 import characters.turret.Turret;
 import constants.GlobalConstants;
 import javafx.animation.AnimationTimer;
-import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Path;
@@ -34,10 +29,8 @@ public class Controller {
     public void addTurret(ImageView way, double x, double y) {
         Turret turret = new BlastMissileTurret();
         turret.setTranslateXY(x - GlobalConstants.BOUND_X, y - GlobalConstants.BOUND_Y);
-        if (!way.getBoundsInParent().intersects(turret.getImageView().getBoundsInParent())) {
-            pane.getChildren().add(turret.getNode());
-            turrets.add(turret);
-        }
+        pane.getChildren().add(turret.getNode(pane));
+        turrets.add(turret);
     }
 
     public void start() {
