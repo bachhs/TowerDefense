@@ -6,9 +6,9 @@ public class PeaceEnvog extends Enemy {
 
     public PeaceEnvog() {
         super(path);
-        HP = 70;
-        speed = 2;
-        armor = 50;
+        HP = 100;
+        speed = 1;
+        armor = 90;
         score = 30;
         damage = 5;
     }

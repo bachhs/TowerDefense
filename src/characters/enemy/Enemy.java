@@ -50,9 +50,10 @@ public class Enemy extends Entity {
         return healthBar;
     }
 
-    public void decreaseHP(int dec) {
-        if (HP > dec - armor) {
-            HP = HP - (dec - armor);
+    public void decreaseHP(int dame) {
+        int dec = dame - dame * armor / 100;
+        if (HP > dec) {
+            HP = HP - dec;
             healthBar.setProgress(HP, MAX_HP);
         } else HP = 0;
     }

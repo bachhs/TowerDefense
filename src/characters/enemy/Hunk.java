@@ -2,14 +2,14 @@ package characters.enemy;
 
 public class Hunk extends Enemy {
     private static final String path = "./resources/img/HUNK.png";
-    private static final int MAX_HP = 0;
 
     public Hunk() {
         super(path);
-        HP = 40;
-        speed = 3;
-        armor = 35;
-        score = 15;
+        MAX_HP = 70;
+        HP = MAX_HP;
+        speed = 2;
+        armor = 50;
+        score = 20;
         damage = 3;
     }
 }

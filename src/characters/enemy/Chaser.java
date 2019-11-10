@@ -7,7 +7,7 @@ public class Chaser extends Enemy {
         MAX_HP = 20;
         HP = MAX_HP;
         speed = 5;
-        armor = 35;
+        armor = 20;
         score = 5;
         damage = 1;
     }

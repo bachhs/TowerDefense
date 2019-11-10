@@ -2,7 +2,7 @@ package scenes;
 
 import characters.Tile;
 import characters.enemy.*;
-import characters.turret.BlastMissileTurret;
+import characters.turret.CannonTurret;
 import characters.turret.Turret;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;

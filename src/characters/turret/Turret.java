@@ -21,12 +21,12 @@ import java.util.List;
 
 public abstract class Turret extends Tile {
 
-    protected int speed = 0;
     protected double range = 0;
     protected int damage = 0;
     protected int score = 0;
-    protected int shootTime = 0;
-    protected Image amor;
+    protected double shootTime = 0;
+    protected int speedBullet = 0;
+    protected Image bullet;
     protected ImageView cannon;
     protected Circle rangeCircle;
 
@@ -35,10 +35,6 @@ public abstract class Turret extends Tile {
         rangeCircle = new Circle();
         rangeCircle.setFill(Color.GRAY);
         rangeCircle.setOpacity(0);
-    }
-
-    public int getSpeed() {
-        return speed;
     }
 
     public double getRange() {
@@ -58,7 +54,7 @@ public abstract class Turret extends Tile {
         return score;
     }
 
-    public int getShootTime() {
+    public double getShootTime() {
         return shootTime;
     }
 
@@ -79,15 +75,7 @@ public abstract class Turret extends Tile {
     }
 
     public void checkingEnemy(List<Enemy> enemies) {
-        int i = 0;
-        if (isInRange(enemies.get(i)))
-            setRotate(enemies.get(i));
-        for (i = 0; i < enemies.size() - 1; i++) {
-            if (!isInRange(enemies.get(i))) {
-                if (isInRange(enemies.get(i + 1)))
-                    setRotate(enemies.get(i + 1));
-            }
-        }
+        if(getTarget(enemies) != null) setRotate(getTarget(enemies));
     }
 
     @Override
@@ -154,10 +142,10 @@ public abstract class Turret extends Tile {
 
     public void Shoot(Enemy e, Pane pane) {
         if (e != null) {
-            ImageView shot = new ImageView(amor);
+            ImageView shot = new ImageView(bullet);
             shot.setTranslateX(1000);
             shot.setTranslateY(1000);
-            PathTransition pt = new PathTransition(Duration.millis(50), ShootWay(imageView.getTranslateX() + 30,
+            PathTransition pt = new PathTransition(Duration.millis(speedBullet), ShootWay(imageView.getTranslateX() + 30,
                     imageView.getTranslateY() + 30, e.getImageView().getTranslateX(), e.getImageView().getTranslateY()),
                     shot);
             pt.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);

@@ -1,11 +1,14 @@
 package scenes;
 
+import characters.Nexus;
 import characters.enemy.Chaser;
 import characters.enemy.Enemy;
 import characters.enemy.Hunk;
 import characters.enemy.MeatHarvester;
 import characters.enemy.PeaceEnvog;
-import characters.turret.BlastMissileTurret;
+import characters.turret.CannonTurret;
+import characters.turret.DoubleMissileTurret;
+import characters.turret.SnipMissileTurret;
 import characters.turret.Turret;
 import constants.GlobalConstants;
 import javafx.animation.AnimationTimer;
@@ -13,6 +16,10 @@ import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Path;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,19 +27,20 @@ import java.util.List;
 public class Controller {
     private List<Turret> turrets = new ArrayList<>();
     private List<Enemy> enemies = new ArrayList<>();
+    private Nexus nexus = new Nexus();
     private Path path;
     private Pane pane;
     private static final int enemyPerTurn = 6;
 
     public Controller(Pane pane, Path path) {
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 8; i++)
             enemies.add(new Chaser());
         this.path = path;
         this.pane = pane;
     }
 
     public void addTurret(ImageView way, double x, double y) {
-        Turret turret = new BlastMissileTurret();
+        Turret turret = new CannonTurret();
         turret.setTranslateXY(x - GlobalConstants.BOUND_X, y - GlobalConstants.BOUND_Y);
         if (!way.getBoundsInParent().intersects(turret.getImageView().getBoundsInParent())) {
             pane.getChildren().add(turret.getNode());
@@ -51,7 +59,7 @@ public class Controller {
             public void handle(long l) {
                 long elapsedSeconds = (System.currentTimeMillis() - lastUpdate) / 1000;
                 long elapsedShoot = (System.currentTimeMillis() - lastShootUpdate) / 1000;
-                if (elapsedSeconds == 1) {
+                if (elapsedSeconds == 4) {
                     lastUpdate = System.currentTimeMillis();
                     if (i < enemyPerTurn && i < enemies.size()) {
                         enemies.get(i).move(pane, path);
@@ -72,6 +80,8 @@ public class Controller {
                 }
                 for (int i = 0; i < enemies.size(); i++) {
                     if (enemies.get(i).isDead()) {
+                        nexus.addScore(enemies.get(i));
+                        System.out.println(nexus.getScore());
                         pane.getChildren().removeAll(enemies.get(i).getImageView(), enemies.get(i).getHealthBar());
 
                         enemies.remove(enemies.get(i));
@@ -99,6 +109,13 @@ public class Controller {
                 enemies.add(new PeaceEnvog());
                 break;
         }
+    }
+
+    protected void setText() {
+        Text text = new Text("VS Yi Vô Đối");
+        text.setFont(Font.font("verdana", FontWeight.LIGHT, FontPosture.REGULAR, 30));
+        text.setTranslateX(0);
+        text.setTranslateY(0);
     }
 
 }
