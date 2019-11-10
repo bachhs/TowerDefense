@@ -2,18 +2,21 @@ package characters.turret;
 
 import characters.Tile;
 import characters.enemy.Enemy;
-import javafx.event.Event;
+import javafx.animation.PathTransition;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
-import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Turret extends Tile {
@@ -22,6 +25,8 @@ public abstract class Turret extends Tile {
     protected double range = 0;
     protected int damage = 0;
     protected int score = 0;
+    protected int shootTime = 0;
+    protected Image amor;
     protected ImageView cannon;
     protected Circle rangeCircle;
 
@@ -53,6 +58,10 @@ public abstract class Turret extends Tile {
         return score;
     }
 
+    public int getShootTime() {
+        return shootTime;
+    }
+
     public void setRotate(Enemy e) {
         cannon.setRotate(getAngle(e));
     }
@@ -63,12 +72,10 @@ public abstract class Turret extends Tile {
     }
 
     public boolean isInRange(Enemy e) {
-        if (Math.sqrt((e.getImageView().getTranslateX() - cannon.getTranslateX())
+        return Math.sqrt((e.getImageView().getTranslateX() - cannon.getTranslateX())
                 * (e.getImageView().getTranslateX() - cannon.getTranslateX())
                 + (e.getImageView().getTranslateY() - cannon.getTranslateY())
-                        * (e.getImageView().getTranslateY() - cannon.getTranslateY())) < getRange())
-            return true;
-        return false;
+                * (e.getImageView().getTranslateY() - cannon.getTranslateY())) < getRange();
     }
 
     public void checkingEnemy(List<Enemy> enemies) {
@@ -124,7 +131,45 @@ public abstract class Turret extends Tile {
         castle.setPrefHeight(imageView.getFitHeight());
         castle.setMaxHeight(imageView.getFitHeight());
 
+
         return castle;
     }
 
+    public Path ShootWay(double x, double y, double X, double Y) {
+        Path path = new Path();
+        MoveTo moveTo = new MoveTo(x, y);
+        LineTo line = new LineTo(X, Y);
+        path.getElements().addAll(moveTo, line);
+        return path;
+    }
+
+    public Enemy getTarget(List<Enemy> enemies) {
+        for (int i = 0; i < enemies.size(); i++) {
+            if (isInRange(enemies.get(i)) && !enemies.get(i).isDead()) {
+                return enemies.get(i);
+            }
+        }
+        return null;
+    }
+
+    public void Shoot(Enemy e, Pane pane) {
+        if (e != null) {
+            ImageView shot = new ImageView(amor);
+            shot.setTranslateX(1000);
+            shot.setTranslateY(1000);
+            PathTransition pt = new PathTransition(Duration.millis(50), ShootWay(imageView.getTranslateX() + 30,
+                    imageView.getTranslateY() + 30, e.getImageView().getTranslateX(), e.getImageView().getTranslateY()),
+                    shot);
+            pt.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+            pt.setAutoReverse(true);
+            pane.getChildren().addAll(shot);
+            pt.setOnFinished(event -> {
+                pane.getChildren().removeAll(shot);
+            });
+            e.decreaseHP(getDamage());
+
+            pt.play();
+
+        }
+    }
 }

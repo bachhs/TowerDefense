@@ -41,26 +41,44 @@ public class Controller {
     }
 
     public void start() {
-        for (Enemy enemy : enemies) pane.getChildren().add(enemy.healthBar);
+        for (Enemy enemy : enemies) pane.getChildren().add(enemy.getHealthBar());
         AnimationTimer gameLoop = new AnimationTimer() {
             long lastUpdate = System.currentTimeMillis();
-            int waveCount = 0;
+            long lastShootUpdate = System.currentTimeMillis();
             int i = 0;
 
             @Override
             public void handle(long l) {
                 long elapsedSeconds = (System.currentTimeMillis() - lastUpdate) / 1000;
+                long elapsedShoot = (System.currentTimeMillis() - lastShootUpdate) / 1000;
                 if (elapsedSeconds == 1) {
                     lastUpdate = System.currentTimeMillis();
-                    if (i < enemyPerTurn) {
+                    if (i < enemyPerTurn && i < enemies.size()) {
                         enemies.get(i).move(pane, path);
                         i++;
                     }
                 }
-                for (Turret turret : turrets) turret.checkingEnemy(enemies);
                 for (Enemy enemy : enemies)
                     enemy.relocateHealthBar(enemy.getImageView().getTranslateX(),
                             enemy.getImageView().getTranslateY());
+
+                for (Turret turret : turrets) turret.checkingEnemy(enemies);
+
+                for (Turret turret : turrets) {
+                    if (elapsedShoot == turret.getShootTime()) {
+                        lastShootUpdate = System.currentTimeMillis();
+                        turret.Shoot(turret.getTarget(enemies), pane);
+                    }
+                }
+                for (int i = 0; i < enemies.size(); i++) {
+                    if (enemies.get(i).isDead()) {
+                        pane.getChildren().removeAll(enemies.get(i).getImageView(), enemies.get(i).getHealthBar());
+
+                        enemies.remove(enemies.get(i));
+                        i--;
+                    }
+                }
+
             }
         };
         gameLoop.start();

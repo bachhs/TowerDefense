@@ -3,21 +3,19 @@ package characters.enemy;
 import characters.Entity;
 import javafx.animation.PathTransition;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
-
-import java.util.List;
 
 import static constants.GlobalConstants.GAME_SPEED;
 
 public class Enemy extends Entity {
-    public HealthBar healthBar = new HealthBar();
+    private HealthBar healthBar = new HealthBar();
     protected int HP;
     protected int speed;
     protected int armor;
     protected int score;
     protected int damage;
+    protected int MAX_HP = 100;
 
     public Enemy(String imagePath) {
         super(imagePath);
@@ -26,8 +24,6 @@ public class Enemy extends Entity {
         healthBar.relocate(1000, 1000);
         healthBar.setScaleX(0.7);
         healthBar.setScaleY(0.7);
-        healthBar.setProgress(74, 100);
-
     }
 
     public int getHP() {
@@ -50,12 +46,15 @@ public class Enemy extends Entity {
         return damage;
     }
 
-    public void decreaseHP(int dec) {
-        if (HP > dec)
-            HP = HP - dec;
-        else
-            HP = 0;
+    public HealthBar getHealthBar() {
+        return healthBar;
+    }
 
+    public void decreaseHP(int dec) {
+        if (HP > dec - armor) {
+            HP = HP - (dec - armor);
+            healthBar.setProgress(HP, MAX_HP);
+        } else HP = 0;
     }
 
     public void move(Pane pane, Path pt) {

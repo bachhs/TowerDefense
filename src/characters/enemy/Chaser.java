@@ -2,12 +2,12 @@ package characters.enemy;
 
 public class Chaser extends Enemy {
     private static final String path = "./resources/img/Chaser.png";
-    private static final int MAX_HP = 0;
     public Chaser() {
         super(path);
-        HP = 20;
+        MAX_HP = 20;
+        HP = MAX_HP;
         speed = 5;
-        armor = 10;
+        armor = 35;
         score = 5;
         damage = 1;
     }
