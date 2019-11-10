@@ -5,6 +5,7 @@ import characters.enemy.Enemy;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -72,8 +73,8 @@ public abstract class Turret extends Tile {
 
     public void checkingEnemy(List<Enemy> enemies) {
         int i = 0;
-        if(isInRange(enemies.get(i)))
-                setRotate(enemies.get(i));
+        if (isInRange(enemies.get(i)))
+            setRotate(enemies.get(i));
         for (i = 0; i < enemies.size() - 1; i++) {
             if (!isInRange(enemies.get(i))) {
                 if (isInRange(enemies.get(i + 1)))
@@ -114,7 +115,15 @@ public abstract class Turret extends Tile {
         cannon.addEventHandler(MouseEvent.MOUSE_ENTERED, rangeEntered);
         cannon.addEventHandler(MouseEvent.MOUSE_EXITED, rangeExited);
 
-        castle.getChildren().addAll(rangeCircle, imageView);
+        castle.getChildren().addAll(rangeCircle, imageView, cannon);
+
+        castle.setMinWidth(imageView.getFitHeight());
+        castle.setPrefWidth(imageView.getFitHeight());
+        castle.setMaxWidth(imageView.getFitHeight());
+        castle.setMinHeight(imageView.getFitHeight());
+        castle.setPrefHeight(imageView.getFitHeight());
+        castle.setMaxHeight(imageView.getFitHeight());
+
         return castle;
     }
 

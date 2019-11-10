@@ -21,10 +21,12 @@ import static constants.GlobalConstants.*;
 
 public class Round1 {
 
-    private static final String ROUND_BACKGROUND = "./resources/img/Round1_backGround.png";
+    private static final String ROUND_BACKGROUND = "./resources/img/Round_backGround.png";
+    private static final String ROUND1_WAY = "./resources/img/Round1_way.png";
 
     public static Scene getScene(Stage stage) {
         Tile gameBackground = new Tile(ROUND_BACKGROUND);
+        Tile way = new Tile(ROUND1_WAY);
 
         MediaPlayer Round1Music = new MediaPlayer(new Media(new File(GAME_MUSIC_URL).toURI().toString()));
         Round1Music.setCycleCount(MediaPlayer.INDEFINITE);
@@ -33,23 +35,16 @@ public class Round1 {
         MediaView Round1mediaView = new MediaView(Round1Music);
 
         StackPane R1StackPane = new StackPane();
-        R1StackPane.getChildren().addAll(Round1mediaView, gameBackground.getImageView());
-
-        ChaserWave chaserWave = new ChaserWave(new Chaser(), 3, R1StackPane, createPath());
-        HUNKwave hunKwave = new HUNKwave(new Hunk(), 4, R1StackPane, createPath());
-        MeatHarvesterWave meatHarvesterWave = new MeatHarvesterWave(new MeatHarvester(), 2, R1StackPane, createPath());
-        PeaceEnvogWave peaceEnvogWave = new PeaceEnvogWave(new PeaceEnvog(), 3, R1StackPane, createPath());
-
-
+        R1StackPane.getChildren().addAll(Round1mediaView, gameBackground.getImageView(), way.getImageView());
         Controller controller = new Controller(R1StackPane, createPath());
         controller.start();
-
-        R1StackPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        gameBackground.getImageView().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                System.out.println(mouseEvent.getX() + "," + mouseEvent.getY());
+                controller.addTurret(way.getImageView(), mouseEvent.getX(), mouseEvent.getY());
             }
         });
+
 
         return new Scene(R1StackPane, GAME_WIDTH, GAME_HEIGHT);
     }
