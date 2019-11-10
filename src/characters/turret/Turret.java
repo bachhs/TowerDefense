@@ -34,7 +34,7 @@ public abstract class Turret extends Tile {
         super(imageURL);
         rangeCircle = new Circle();
         rangeCircle.setFill(Color.GRAY);
-        rangeCircle.setOpacity(0);
+        rangeCircle.setOpacity(0.5);
     }
 
     public double getRange() {
@@ -71,11 +71,12 @@ public abstract class Turret extends Tile {
         return Math.sqrt((e.getImageView().getTranslateX() - cannon.getTranslateX())
                 * (e.getImageView().getTranslateX() - cannon.getTranslateX())
                 + (e.getImageView().getTranslateY() - cannon.getTranslateY())
-                * (e.getImageView().getTranslateY() - cannon.getTranslateY())) < getRange();
+                        * (e.getImageView().getTranslateY() - cannon.getTranslateY())) < getRange();
     }
 
     public void checkingEnemy(List<Enemy> enemies) {
-        if(getTarget(enemies) != null) setRotate(getTarget(enemies));
+        if (getTarget(enemies) != null)
+            setRotate(getTarget(enemies));
     }
 
     @Override
@@ -88,29 +89,33 @@ public abstract class Turret extends Tile {
         this.rangeCircle.setTranslateY(y);
     }
 
-    public Node getNode() {
+    public Node getNode(Pane pane) {
         StackPane castle = new StackPane();
 
         EventHandler<MouseEvent> rangeEntered = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                rangeCircle.setOpacity(0.5);
+                if (!pane.getChildren().contains(rangeCircle)) {
+                    pane.getChildren().add(rangeCircle);
+                }
+
             }
         };
 
         EventHandler<MouseEvent> rangeExited = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                rangeCircle.setOpacity(0);
+                pane.getChildren().remove(rangeCircle);
             }
         };
 
-        imageView.addEventHandler(MouseEvent.MOUSE_ENTERED, rangeEntered);
-        imageView.addEventHandler(MouseEvent.MOUSE_EXITED, rangeExited);
-        cannon.addEventHandler(MouseEvent.MOUSE_ENTERED, rangeEntered);
-        cannon.addEventHandler(MouseEvent.MOUSE_EXITED, rangeExited);
+        rangeCircle.addEventHandler(MouseEvent.MOUSE_ENTERED, rangeEntered);
+        rangeCircle.addEventHandler(MouseEvent.MOUSE_EXITED, rangeExited);
 
-        castle.getChildren().addAll(rangeCircle, imageView, cannon);
+        imageView.addEventHandler(MouseEvent.MOUSE_ENTERED, rangeEntered);
+        cannon.addEventHandler(MouseEvent.MOUSE_ENTERED, rangeEntered);
+
+        castle.getChildren().addAll(imageView, cannon);
 
         castle.setMinWidth(imageView.getFitHeight());
         castle.setPrefWidth(imageView.getFitHeight());
@@ -118,7 +123,6 @@ public abstract class Turret extends Tile {
         castle.setMinHeight(imageView.getFitHeight());
         castle.setPrefHeight(imageView.getFitHeight());
         castle.setMaxHeight(imageView.getFitHeight());
-
 
         return castle;
     }
@@ -145,8 +149,9 @@ public abstract class Turret extends Tile {
             ImageView shot = new ImageView(bullet);
             shot.setTranslateX(1000);
             shot.setTranslateY(1000);
-            PathTransition pt = new PathTransition(Duration.millis(speedBullet), ShootWay(imageView.getTranslateX() + 30,
-                    imageView.getTranslateY() + 30, e.getImageView().getTranslateX(), e.getImageView().getTranslateY()),
+            PathTransition pt = new PathTransition(Duration.millis(speedBullet),
+                    ShootWay(imageView.getTranslateX() + 30, imageView.getTranslateY() + 30,
+                            e.getImageView().getTranslateX(), e.getImageView().getTranslateY()),
                     shot);
             pt.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
             pt.setAutoReverse(true);

@@ -1,18 +1,11 @@
 package scenes;
 
 import characters.Nexus;
-import characters.enemy.Chaser;
-import characters.enemy.Enemy;
-import characters.enemy.Hunk;
-import characters.enemy.MeatHarvester;
-import characters.enemy.PeaceEnvog;
+import characters.enemy.*;
 import characters.turret.CannonTurret;
-import characters.turret.DoubleMissileTurret;
-import characters.turret.SnipMissileTurret;
 import characters.turret.Turret;
 import constants.GlobalConstants;
 import javafx.animation.AnimationTimer;
-import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Path;
@@ -42,14 +35,13 @@ public class Controller {
     public void addTurret(ImageView way, double x, double y) {
         Turret turret = new CannonTurret();
         turret.setTranslateXY(x - GlobalConstants.BOUND_X, y - GlobalConstants.BOUND_Y);
-        if (!way.getBoundsInParent().intersects(turret.getImageView().getBoundsInParent())) {
-            pane.getChildren().add(turret.getNode());
-            turrets.add(turret);
-        }
+        pane.getChildren().add(turret.getNode(pane));
+        turrets.add(turret);
     }
 
     public void start() {
-        for (Enemy enemy : enemies) pane.getChildren().add(enemy.getHealthBar());
+        for (Enemy enemy : enemies)
+            pane.getChildren().add(enemy.getHealthBar());
         AnimationTimer gameLoop = new AnimationTimer() {
             long lastUpdate = System.currentTimeMillis();
             long lastShootUpdate = System.currentTimeMillis();
@@ -67,10 +59,10 @@ public class Controller {
                     }
                 }
                 for (Enemy enemy : enemies)
-                    enemy.relocateHealthBar(enemy.getImageView().getTranslateX(),
-                            enemy.getImageView().getTranslateY());
+                    enemy.relocateHealthBar(enemy.getImageView().getTranslateX(), enemy.getImageView().getTranslateY());
 
-                for (Turret turret : turrets) turret.checkingEnemy(enemies);
+                for (Turret turret : turrets)
+                    turret.checkingEnemy(enemies);
 
                 for (Turret turret : turrets) {
                     if (elapsedShoot == turret.getShootTime()) {
@@ -96,18 +88,18 @@ public class Controller {
 
     private void spawnEnemies(String enemyType) {
         switch (enemyType) {
-            case "Chaser":
-                enemies.add(new Chaser());
-                break;
-            case "Hunk":
-                enemies.add(new Hunk());
-                break;
-            case "MeatHarvester":
-                enemies.add(new MeatHarvester());
-                break;
-            case "PeaceEnvog":
-                enemies.add(new PeaceEnvog());
-                break;
+        case "Chaser":
+            enemies.add(new Chaser());
+            break;
+        case "Hunk":
+            enemies.add(new Hunk());
+            break;
+        case "MeatHarvester":
+            enemies.add(new MeatHarvester());
+            break;
+        case "PeaceEnvog":
+            enemies.add(new PeaceEnvog());
+            break;
         }
     }
 
