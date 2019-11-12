@@ -1,12 +1,10 @@
 package characters;
 
-import characters.enemy.Enemy;
-import characters.turret.Turret;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class Nexus {
+public class Nexus implements Health {
     private int health;
     private int score;
 
@@ -23,15 +21,17 @@ public class Nexus {
         return this.score;
     }
 
-    public void buyTurret(Turret turret) {
-        if(haveScore()) {
-            score = score - turret.getScore();
-        }
+    public void decreaseScore(int dec) {
+        if (score > dec)
+            score -= dec;
+        else
+            score = 0;
     }
 
-    public void decHealth(Enemy enemy) {
-        if(health > enemy.getDamage())
-            health = health - enemy.getDamage();
+    @Override
+    public void decreaseHP(int dec) {
+        if (health > dec)
+            health -= dec;
         else
             health = 0;
     }
@@ -40,18 +40,16 @@ public class Nexus {
         return health == 0;
     }
 
-    public boolean haveScore() {
-        return score > 0;
+    public void addScore(int inc) {
+        this.score += inc;
     }
 
-    public void addScore(Enemy e) {
-        this.score += e.getScore();
-    }
-
-    public Text lose() {
-        Text text = new Text("YOU'RE STUPID VLLLLLLLLLL");
-        text.setFont(Font.loadFont("file:./src/resources/font/CF.TTF", 100));
-        text.setFill(Color.YELLOW);
+    public Text getText() {
+        Text text = new Text("Health " + getHealth() + "      " + getScore() + "$");
+        text.setFont(Font.loadFont("file:./src/resources/font/CF.TTF", 50));
+        text.setFill(Color.DARKRED);
+        text.setTranslateX(-370);
+        text.setTranslateY(-325);
         return text;
     }
 }

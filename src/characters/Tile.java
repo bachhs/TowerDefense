@@ -1,7 +1,5 @@
 package characters;
 
-import static constants.GlobalConstants.GAME_WIDTH;
-
 public class Tile extends Entity {
 
     public Tile(String imageURL) {

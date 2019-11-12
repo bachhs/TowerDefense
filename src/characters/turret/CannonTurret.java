@@ -12,11 +12,12 @@ public class CannonTurret extends Turret {
     public CannonTurret() {
         super(path);
         cannon = new ImageView(new Image(link));
-        bullet = new Image(Bullet);
+        bulletView = Bullet;
         speedBullet = 150;
-        setRange(220);
+        setRange(200);
         damage = 20;
-        score = 30;
+        score = 25;
         shootTime = 2;
+        fullTurretPath = "./resources/img/CannonFull.png";
     }
 }

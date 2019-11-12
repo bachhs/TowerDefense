@@ -1,21 +1,23 @@
 package scenes;
 
 import characters.Nexus;
-import characters.enemy.*;
+import characters.enemy.Chaser;
+import characters.enemy.Enemy;
+import characters.enemy.Hunk;
+import characters.enemy.MeatHarvester;
 import characters.turret.CannonTurret;
+import characters.turret.DoubleMissileTurret;
+import characters.turret.SnipMissileTurret;
 import characters.turret.Turret;
 import constants.GlobalConstants;
 import javafx.animation.AnimationTimer;
-import javafx.animation.PauseTransition;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
+import javafx.scene.media.MediaView;
 import javafx.scene.shape.Path;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,116 +29,131 @@ public class Controller {
     private Path path;
     private Pane pane;
     private Text text;
-    private static final int enemyPerTurn = 20;
+    private Stage stage;
 
-    public Controller(Pane pane, Path path) {
-        for (int i = 0; i < 20; i++)
-            enemies.add(new MeatHarvester());
-        this.path = path;
+    public Controller(Stage stage, Pane pane, Path path) {
+        this.stage = stage;
         this.pane = pane;
+        this.path = path;
+        spawnEnemies();
     }
 
-    public void addTurret(ImageView way, double x, double y) {
-        Turret turret = new CannonTurret();
-        turret.setTranslateXY(x - GlobalConstants.BOUND_X, y - GlobalConstants.BOUND_Y);
-        pane.getChildren().add(turret.getNode(pane));
-        turrets.add(turret);
+    public void addTurret(ImageView way, String turretType, double x, double y) {
+        Turret turret;
+        switch (turretType) {
+            case "DoubleMissileTurret":
+                turret = new DoubleMissileTurret();
+                break;
+            case "SnipMissileTurret":
+                turret = new SnipMissileTurret();
+                break;
+            default:
+                turret = new CannonTurret();
+        }
+        if (nexus.getScore() >= turret.getScore()) {
+            nexus.decreaseScore(turret.getScore());
+            turret.setTranslateXY(x - GlobalConstants.BOUND_X, y - GlobalConstants.BOUND_Y);
+            pane.getChildren().add(turret.getNode(nexus, pane, turrets));
+            turrets.add(turret);
+            pane.getChildren().remove(text);
+            text = nexus.getText();
+            pane.getChildren().add(text);
+        }
     }
 
     public void start() {
+        text = nexus.getText();
+        pane.getChildren().add(text);
         for (Enemy enemy : enemies)
             pane.getChildren().add(enemy.getHealthBar());
-        text = setText();
-        pane.getChildren().add(text);
-        PauseTransition pause = new PauseTransition(Duration.millis(1000));
+
         AnimationTimer gameLoop = new AnimationTimer() {
             long lastUpdate = System.currentTimeMillis();
-            long lastShootUpdate = System.currentTimeMillis();
-            int i = 0;
+            long lastCannonUpdate = System.currentTimeMillis();
+            long lastDoubleUpdate = System.currentTimeMillis();
+            long lastSnipUpdate = System.currentTimeMillis();
+            int enemyCount = 0;
 
             @Override
             public void handle(long l) {
                 long elapsedSeconds = (System.currentTimeMillis() - lastUpdate) / 1000;
-                long elapsedShoot = (System.currentTimeMillis() - lastShootUpdate) / 1000;
-                if (elapsedSeconds == 2) {
+                long elapsedCannon = (System.currentTimeMillis() - lastCannonUpdate) / 1000;
+                long elapsedDouble = (System.currentTimeMillis() - lastDoubleUpdate) / 1000;
+                long elapsedSnip = (System.currentTimeMillis() - lastSnipUpdate) / 1000;
+
+                if (elapsedSeconds == 3) {
                     lastUpdate = System.currentTimeMillis();
-                    if (i < enemyPerTurn && i < enemies.size()) {
-                        enemies.get(i).move(pane, path);
-                        i++;
+                    if (enemyCount < enemies.size()) {
+                        enemies.get(enemyCount).move(pane, path);
+                        enemyCount++;
                     }
                 }
 
-                for (Enemy enemy : enemies)
+                for (Enemy enemy : enemies) {
                     enemy.relocateHealthBar(enemy.getImageView().getTranslateX(), enemy.getImageView().getTranslateY());
+                }
 
                 for (Turret turret : turrets)
                     turret.checkingEnemy(enemies);
 
                 for (Turret turret : turrets) {
-                    if (elapsedShoot == turret.getShootTime()) {
-                        lastShootUpdate = System.currentTimeMillis();
-                        turret.Shoot(turret.getTarget(enemies), pane);
+                    if (elapsedCannon == turret.getShootTime()) {
+                        lastCannonUpdate = System.currentTimeMillis();
+                        turret.shoot(turret.getTarget(enemies), pane);
+                    }
+
+                    if (elapsedDouble == turret.getShootTime()) {
+                        lastDoubleUpdate = System.currentTimeMillis();
+                        turret.shoot(turret.getTarget(enemies), pane);
+                    }
+
+                    if (elapsedSnip == turret.getShootTime()) {
+                        lastSnipUpdate = System.currentTimeMillis();
+                        turret.shoot(turret.getTarget(enemies), pane);
                     }
                 }
+
                 for (int i = 0; i < enemies.size(); i++) {
                     if (enemies.get(i).isDead()) {
-                        nexus.addScore(enemies.get(i));
-
+                        nexus.addScore(enemies.get(i).getScore());
                         pane.getChildren().removeAll(enemies.get(i).getImageView(), enemies.get(i).getHealthBar());
                         enemies.remove(enemies.get(i));
                         i--;
                         pane.getChildren().remove(text);
-                        text = setText();
+                        text = nexus.getText();
+                        pane.getChildren().add(text);
+                    } else if (enemies.get(i).getImageView().getTranslateY() == -74
+                            && enemies.get(i).getImageView().getTranslateX() > 640) {
+                        nexus.decreaseHP(enemies.get(i).getDamage());
+                        pane.getChildren().removeAll(enemies.get(i).getImageView(), enemies.get(i).getHealthBar());
+                        enemies.remove(enemies.get(i));
+                        i--;
+                        pane.getChildren().remove(text);
+                        text = nexus.getText();
                         pane.getChildren().add(text);
                     }
                 }
-
-                if(nexus.isLose()) {
-                    pane.getChildren().add(nexus.lose());
+                if (nexus.isLose()) {
                     this.stop();
-                }
-
-                //setFinish
-                for (int i = 0; i < enemies.size(); i++) {
-                    if (!enemies.get(i).isDead() && enemies.get(i).getImageView().getTranslateY() == -74 && enemies.get(i).getImageView().getTranslateX() > 640) {
-                        nexus.decHealth(enemies.get(i));
-                        pane.getChildren().removeAll(enemies.get(i).getImageView(), enemies.get(i).getHealthBar());
-                        enemies.remove(enemies.get(i));
-                        i--;
-                        pane.getChildren().remove(text);
-                        text = setText();
-                        pane.getChildren().add(text);
-                    }
+                    for (Node find : pane.getChildren())
+                        if (find instanceof MediaView)
+                            ((MediaView) find).getMediaPlayer().stop();
+                    pane.getChildren().clear();
+                    stage.setScene(Endgame.getLoseScene(stage));
                 }
             }
         };
         gameLoop.start();
     }
 
-    private void spawnEnemies(String enemyType) {
-        switch (enemyType) {
-        case "Chaser":
+    private void spawnEnemies() {
+        for (int i = 0; i < 10; i++)
             enemies.add(new Chaser());
-            break;
-        case "Hunk":
+        for (int i = 0; i < 5; i++)
             enemies.add(new Hunk());
-            break;
-        case "MeatHarvester":
+        for (int i = 0; i < 5; i++)
             enemies.add(new MeatHarvester());
-            break;
-        case "PeaceEnvog":
-            enemies.add(new PeaceEnvog());
-            break;
-        }
+        for (int i = 0; i < 2; i++)
+            enemies.add(new Hunk());
     }
-
-    protected Text setText() {
-        Text text = new Text("Health: " + nexus.getHealth() + "      " + nexus.getScore() + "$");
-        text.setFont(Font.loadFont("file:./src/resources/font/CF.TTF", 50));
-        text.setFill(Color.DARKRED);
-        text.setTranslateX(-370);
-        text.setTranslateY(-325);
-        return text;
-    }
-
 }

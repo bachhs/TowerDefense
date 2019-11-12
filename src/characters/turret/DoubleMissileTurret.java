@@ -3,8 +3,6 @@ package characters.turret;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.io.InputStream;
-
 public class DoubleMissileTurret extends Turret {
     private static final String path = "./resources/img/plithDoubleMissile.png";
     private static final String link = "./resources/img/DoubleMissile.png";
@@ -13,11 +11,12 @@ public class DoubleMissileTurret extends Turret {
     public DoubleMissileTurret() {
         super(path);
         cannon = new ImageView(new Image(link));
-        bullet = new Image(Bullet);
-        setRange(300);
+        bulletView = Bullet;
+        setRange(250);
         speedBullet = 140;
         damage = 40;
         score = 50;
-        shootTime = 3;
+        shootTime = 2;
+        fullTurretPath = "./resources/img/DoubleFull.png";
     }
 }
