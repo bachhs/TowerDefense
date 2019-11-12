@@ -1,20 +1,28 @@
 package characters.turret;
 
+import characters.Bullet;
+import characters.Nexus;
 import characters.Tile;
 import characters.enemy.Enemy;
 import javafx.animation.PathTransition;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.util.List;
@@ -26,9 +34,10 @@ public abstract class Turret extends Tile {
     protected int score = 0;
     protected double shootTime = 0;
     protected int speedBullet = 0;
-    protected Image bullet;
+    protected String bulletView;
     protected ImageView cannon;
     protected Circle rangeCircle;
+    protected String fullTurretPath;
 
     public Turret(String imageURL) {
         super(imageURL);
@@ -89,8 +98,9 @@ public abstract class Turret extends Tile {
         this.rangeCircle.setTranslateY(y);
     }
 
-    public Node getNode(Pane pane) {
+    public Node getNode(Nexus nexus, Pane pane, List<Turret> turrets) {
         StackPane castle = new StackPane();
+        Turret temp = this;
 
         EventHandler<MouseEvent> rangeEntered = new EventHandler<MouseEvent>() {
             @Override
@@ -98,22 +108,81 @@ public abstract class Turret extends Tile {
                 if (!pane.getChildren().contains(rangeCircle)) {
                     pane.getChildren().add(rangeCircle);
                 }
+                VBox vBoxInfo = new VBox();
+                vBoxInfo.setPrefSize(150, 40);
+                vBoxInfo.setSpacing(10);
 
+                Button upgrade = new Button("Upgrade");
+                upgrade.setTranslateX(0);
+                upgrade.setTranslateY(50);
+                upgrade.setFont(Font.font(25));
+                upgrade.setPrefSize(vBoxInfo.getPrefWidth(), vBoxInfo.getPrefHeight());
+                upgrade.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        pane.getChildren().remove(rangeCircle);
+                        if (nexus.getScore() >= getScore() / 4) {
+                            upgrade();
+                            nexus.decreaseScore(getScore() / 4);
+                            for (Node find : pane.getChildren())
+                                if (find instanceof Text) {
+                                    pane.getChildren().remove(find);
+                                    break;
+                                }
+
+                            Text text = nexus.getText();
+                            pane.getChildren().add(text);
+                        }
+                        pane.getChildren().remove(vBoxInfo);
+                    }
+                });
+
+                Button sell = new Button("Sell");
+                sell.setTranslateX(0);
+                sell.setTranslateY(75);
+                sell.setFont(Font.font(25));
+                sell.setPrefSize(vBoxInfo.getPrefWidth(), vBoxInfo.getPrefHeight());
+                sell.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        nexus.addScore(getScore() / 2);
+                        pane.getChildren().remove(rangeCircle);
+                        pane.getChildren().remove(castle);
+                        pane.getChildren().remove(vBoxInfo);
+                        turrets.remove(temp);
+                        for (Node find : pane.getChildren())
+                            if (find instanceof Text) {
+                                pane.getChildren().remove(find);
+                                break;
+                            }
+                        Text text = nexus.getText();
+                        pane.getChildren().add(text);
+                    }
+                });
+
+                Button cancel = new Button("Cancel");
+                cancel.setTranslateX(0);
+                cancel.setTranslateY(100);
+                cancel.setFont(Font.font(25));
+                cancel.setPrefSize(vBoxInfo.getPrefWidth(), vBoxInfo.getPrefHeight());
+                cancel.setCancelButton(true);
+                cancel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        pane.getChildren().remove(rangeCircle);
+                        pane.getChildren().remove(vBoxInfo);
+                    }
+                });
+
+                vBoxInfo.getChildren().addAll(getInfo(), upgrade, sell, cancel);
+                vBoxInfo.setAlignment(Pos.CENTER);
+                vBoxInfo.setTranslateX(500);
+                pane.getChildren().addAll(vBoxInfo);
             }
         };
 
-        EventHandler<MouseEvent> rangeExited = new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                pane.getChildren().remove(rangeCircle);
-            }
-        };
-
-        rangeCircle.addEventHandler(MouseEvent.MOUSE_ENTERED, rangeEntered);
-        rangeCircle.addEventHandler(MouseEvent.MOUSE_EXITED, rangeExited);
-
-        imageView.addEventHandler(MouseEvent.MOUSE_ENTERED, rangeEntered);
-        cannon.addEventHandler(MouseEvent.MOUSE_ENTERED, rangeEntered);
+        imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, rangeEntered);
+        cannon.addEventHandler(MouseEvent.MOUSE_CLICKED, rangeEntered);
 
         castle.getChildren().addAll(imageView, cannon);
 
@@ -127,12 +196,17 @@ public abstract class Turret extends Tile {
         return castle;
     }
 
-    public Path ShootWay(double x, double y, double X, double Y) {
+    public Path shootWay(double x, double y, double X, double Y) {
         Path path = new Path();
         MoveTo moveTo = new MoveTo(x, y);
         LineTo line = new LineTo(X, Y);
         path.getElements().addAll(moveTo, line);
         return path;
+    }
+
+    public void upgrade() {
+        damage *= 1.2;
+        shootTime *= 0.75;
     }
 
     public Enemy getTarget(List<Enemy> enemies) {
@@ -144,25 +218,46 @@ public abstract class Turret extends Tile {
         return null;
     }
 
-    public void Shoot(Enemy e, Pane pane) {
+    public void shoot(Enemy e, Pane pane) {
         if (e != null) {
-            ImageView shot = new ImageView(bullet);
+            Bullet shot = new Bullet(bulletView);
             shot.setTranslateX(1000);
             shot.setTranslateY(1000);
             PathTransition pt = new PathTransition(Duration.millis(speedBullet),
-                    ShootWay(imageView.getTranslateX() + 30, imageView.getTranslateY() + 30,
+                    shootWay(imageView.getTranslateX() + 30, imageView.getTranslateY() + 30,
                             e.getImageView().getTranslateX(), e.getImageView().getTranslateY()),
-                    shot);
+                    shot.getImageView());
             pt.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
             pt.setAutoReverse(true);
-            pane.getChildren().addAll(shot);
+            pane.getChildren().addAll(shot.getImageView());
             pt.setOnFinished(event -> {
-                pane.getChildren().removeAll(shot);
+                pane.getChildren().removeAll(shot.getImageView());
             });
             e.decreaseHP(getDamage());
 
             pt.play();
-
         }
+    }
+
+    public VBox getInfo() {
+        VBox info = new VBox();
+        ImageView turret = new ImageView(new Image(fullTurretPath));
+        Label label1 = new Label();
+        label1.setText("Price: " + this.getScore() + "\nDamage: " + this.getDamage() + "\nRange: " + this.getRange()
+                + "\nTimeShoot: " + this.getShootTime());
+        label1.setFont(Font.loadFont("file:./src/resources/font/OETZTYP_.TTF", 20));
+        info.getChildren().addAll(turret, label1);
+        info.setAlignment(Pos.CENTER);
+        info.setPrefWidth(256);
+        info.setMaxWidth(256);
+        info.setPrefHeight(256);
+        info.setPrefHeight(256);
+        String cssLayout = "-fx-border-color: red;\n" + "-fx-border-insets: 5;\n" + "-fx-border-width: 3;\n"
+                + "-fx-border-style: dashed;\n";
+
+        info.setStyle(cssLayout);
+        info.setScaleX(0.8);
+        info.setScaleY(0.8);
+        return info;
     }
 }

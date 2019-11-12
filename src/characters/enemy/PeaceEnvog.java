@@ -7,7 +7,7 @@ public class PeaceEnvog extends Enemy {
         super(path);
         MAX_HP = 100;
         HP = MAX_HP;
-        speed = 1;
+        speed = 2;
         armor = 90;
         score = 30;
         damage = 20;

@@ -1,20 +1,24 @@
 package scenes;
 
 import characters.Tile;
-import characters.enemy.*;
 import characters.turret.CannonTurret;
-import characters.turret.Turret;
+import characters.turret.DoubleMissileTurret;
+import characters.turret.SnipMissileTurret;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
+import javafx.scene.shape.CubicCurveTo;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -38,15 +42,59 @@ public class Round1 {
 
         StackPane R1StackPane = new StackPane();
         R1StackPane.getChildren().addAll(Round1mediaView, gameBackground.getImageView(), way.getImageView());
-        Controller controller = new Controller(R1StackPane, createPath());
+        Controller controller = new Controller(stage, R1StackPane, createPath());
         controller.start();
+
         gameBackground.getImageView().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent mouseEvent) {
-                controller.addTurret(way.getImageView(), mouseEvent.getX(), mouseEvent.getY());
+            public void handle(MouseEvent mouseEvent1) {
+                double x = mouseEvent1.getX();
+                double y = mouseEvent1.getY();
+
+                VBox turretSelector = new VBox();
+                turretSelector.setOpacity(0.8);
+                turretSelector.setAlignment(Pos.TOP_RIGHT);
+                VBox cannonTurret = new CannonTurret().getInfo();
+                VBox doubleTurret = new DoubleMissileTurret().getInfo();
+                VBox snipTurret = new SnipMissileTurret().getInfo();
+                Button cancel = new Button("Cancel");
+                cancel.setTranslateX(-80);
+                cancel.setTranslateY(0);
+                cancel.setCancelButton(true);
+                cancel.setFont(Font.font(25));
+
+                turretSelector.getChildren().addAll(cannonTurret, doubleTurret, snipTurret, cancel);
+                R1StackPane.getChildren().add(turretSelector);
+                cannonTurret.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        controller.addTurret(way.getImageView(), "CannonTurret", x, y);
+                        R1StackPane.getChildren().remove(turretSelector);
+                    }
+                });
+                doubleTurret.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        controller.addTurret(way.getImageView(), "DoubleMissileTurret", x, y);
+                        R1StackPane.getChildren().remove(turretSelector);
+                    }
+                });
+                snipTurret.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        controller.addTurret(way.getImageView(), "SnipMissileTurret", x, y);
+                        R1StackPane.getChildren().remove(turretSelector);
+                    }
+                });
+                cancel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        R1StackPane.getChildren().remove(turretSelector);
+                        mouseEvent1.consume();
+                    }
+                });
             }
         });
-
 
         return new Scene(R1StackPane, GAME_WIDTH, GAME_HEIGHT);
     }

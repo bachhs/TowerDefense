@@ -1,6 +1,7 @@
 package characters.enemy;
 
 import characters.Entity;
+import characters.Health;
 import javafx.animation.PathTransition;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Path;
@@ -8,7 +9,7 @@ import javafx.util.Duration;
 
 import static constants.GlobalConstants.GAME_SPEED;
 
-public class Enemy extends Entity {
+public class Enemy extends Entity implements Health {
     private HealthBar healthBar = new HealthBar();
     protected int HP;
     protected int speed;
