@@ -2,6 +2,9 @@ package characters;
 
 import characters.enemy.Enemy;
 import characters.turret.Turret;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class Nexus {
     private int health;
@@ -26,9 +29,9 @@ public class Nexus {
         }
     }
 
-    public void subHealth(Enemy enemy) {
-        if(health - enemy.getDamage() > 0)
-            health -= enemy.getDamage();
+    public void decHealth(Enemy enemy) {
+        if(health > enemy.getDamage())
+            health = health - enemy.getDamage();
         else
             health = 0;
     }
@@ -43,5 +46,12 @@ public class Nexus {
 
     public void addScore(Enemy e) {
         this.score += e.getScore();
+    }
+
+    public Text lose() {
+        Text text = new Text("YOU'RE STUPID VLLLLLLLLLL");
+        text.setFont(Font.loadFont("file:./src/resources/font/CF.TTF", 100));
+        text.setFill(Color.YELLOW);
+        return text;
     }
 }

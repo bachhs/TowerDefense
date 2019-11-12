@@ -10,6 +10,6 @@ public class Hunk extends Enemy {
         speed = 2;
         armor = 50;
         score = 20;
-        damage = 3;
+        damage = 10;
     }
 }

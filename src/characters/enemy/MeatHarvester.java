@@ -10,6 +10,6 @@ public class MeatHarvester extends Enemy {
         speed = 8;
         armor = 40;
         score = 15;
-        damage = 3;
+        damage = 10;
     }
 }
