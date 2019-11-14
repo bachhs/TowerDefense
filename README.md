@@ -1,7 +1,5 @@
-## Download & Play
+## UET INT 2204 Big Assignment - Tower Defense
 
-Download the latest JAR [here](https://github.com/bachhs/TowerDefense/releases) to play the game.
+## Demo
 
-## Prerequisites
-
-TowerDefense requires Java to be installed to run the JAR. Download Java [here](https://www.java.com/en/download/)
+Video demo [Youtube](https://youtu.be/WAzNlwRQVxM)
