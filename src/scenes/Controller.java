@@ -12,10 +12,13 @@ import characters.turret.Turret;
 import constants.GlobalConstants;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -28,7 +31,7 @@ public class Controller {
     private Nexus nexus = new Nexus();
     private Path path;
     private Pane pane;
-    private Text text;
+    private Label label = new Label();
     private Stage stage;
 
     public Controller(Stage stage, Pane pane, Path path) {
@@ -53,17 +56,20 @@ public class Controller {
         if (nexus.getScore() >= turret.getScore()) {
             nexus.decreaseScore(turret.getScore());
             turret.setTranslateXY(x - GlobalConstants.BOUND_X, y - GlobalConstants.BOUND_Y);
-            pane.getChildren().add(turret.getNode(nexus, pane, turrets));
+            pane.getChildren().add(turret.getNode(nexus, pane, turrets, label));
             turrets.add(turret);
-            pane.getChildren().remove(text);
-            text = nexus.getText();
-            pane.getChildren().add(text);
+            label.setText("Heath: " + nexus.getHealth() + "         " + nexus.getScore() + "$");
+            System.out.println(turrets.size());
         }
     }
 
     public void start() {
-        text = nexus.getText();
-        pane.getChildren().add(text);
+        label.setText("Heath: " + nexus.getHealth() + "         " + nexus.getScore() + "$");
+        label.setFont(Font.loadFont("file:./src/resources/font/CF.TTF", 50));
+        label.setTextFill(Color.DARKRED);
+        label.setTranslateX(-370);
+        label.setTranslateY(-325);
+        pane.getChildren().add(label);
         for (Enemy enemy : enemies)
             pane.getChildren().add(enemy.getHealthBar());
 
@@ -96,21 +102,24 @@ public class Controller {
                 for (Turret turret : turrets)
                     turret.checkingEnemy(enemies);
 
-                for (Turret turret : turrets) {
-                    if (elapsedCannon == turret.getShootTime()) {
+                for (int i = 0; i< turrets.size(); i++) {
+                    if (turrets.get(i).getClass().toString().equals("class characters.turret.CannonTurret") && elapsedCannon == turrets.get(i).getShootTime()) {
                         lastCannonUpdate = System.currentTimeMillis();
-                        turret.shoot(turret.getTarget(enemies), pane);
+                        turrets.get(i).shoot(turrets.get(i).getTarget(enemies), pane);
                     }
 
-                    if (elapsedDouble == turret.getShootTime()) {
+
+                    if (turrets.get(i).getClass().toString().equals("class characters.turret.DoubleMissileTurret") && elapsedDouble == turrets.get(i).getShootTime()) {
                         lastDoubleUpdate = System.currentTimeMillis();
-                        turret.shoot(turret.getTarget(enemies), pane);
+                        turrets.get(i).shoot(turrets.get(i).getTarget(enemies), pane);
                     }
 
-                    if (elapsedSnip == turret.getShootTime()) {
+
+                    if (turrets.get(i).getClass().toString().equals("class characters.turret.SnipMissileTurret") && elapsedSnip == turrets.get(i).getShootTime()) {
                         lastSnipUpdate = System.currentTimeMillis();
-                        turret.shoot(turret.getTarget(enemies), pane);
+                        turrets.get(i).shoot(turrets.get(i).getTarget(enemies), pane);
                     }
+
                 }
 
                 for (int i = 0; i < enemies.size(); i++) {
@@ -119,18 +128,14 @@ public class Controller {
                         pane.getChildren().removeAll(enemies.get(i).getImageView(), enemies.get(i).getHealthBar());
                         enemies.remove(enemies.get(i));
                         i--;
-                        pane.getChildren().remove(text);
-                        text = nexus.getText();
-                        pane.getChildren().add(text);
+                        label.setText("Heath: " + nexus.getHealth() + "         " + nexus.getScore() + "$");
                     } else if (enemies.get(i).getImageView().getTranslateY() == -74
                             && enemies.get(i).getImageView().getTranslateX() > 640) {
                         nexus.decreaseHP(enemies.get(i).getDamage());
                         pane.getChildren().removeAll(enemies.get(i).getImageView(), enemies.get(i).getHealthBar());
                         enemies.remove(enemies.get(i));
                         i--;
-                        pane.getChildren().remove(text);
-                        text = nexus.getText();
-                        pane.getChildren().add(text);
+                        label.setText("Heath: " + nexus.getHealth() + "         " + nexus.getScore() + "$");
                     }
                 }
                 if (nexus.isLose()) {

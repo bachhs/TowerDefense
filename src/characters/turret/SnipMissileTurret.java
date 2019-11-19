@@ -17,7 +17,7 @@ public class SnipMissileTurret extends Turret {
         speedBullet = 200;
         damage = 110;
         score = 75;
-        shootTime = 2;
+        shootTime = 3;
         fullTurretPath = "./resources/img/SnipTurret.png";
     }
 }

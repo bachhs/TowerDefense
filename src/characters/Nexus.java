@@ -44,12 +44,4 @@ public class Nexus implements Health {
         this.score += inc;
     }
 
-    public Text getText() {
-        Text text = new Text("Health " + getHealth() + "      " + getScore() + "$");
-        text.setFont(Font.loadFont("file:./src/resources/font/CF.TTF", 50));
-        text.setFill(Color.DARKRED);
-        text.setTranslateX(-370);
-        text.setTranslateY(-325);
-        return text;
-    }
 }

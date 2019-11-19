@@ -9,6 +9,6 @@ public class Chaser extends Enemy {
         speed = 5;
         armor = 20;
         score = 5;
-        damage = 1;
+        damage = 5;
     }
 }

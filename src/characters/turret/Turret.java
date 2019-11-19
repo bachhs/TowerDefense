@@ -98,7 +98,7 @@ public abstract class Turret extends Tile {
         this.rangeCircle.setTranslateY(y);
     }
 
-    public Node getNode(Nexus nexus, Pane pane, List<Turret> turrets) {
+    public Node getNode(Nexus nexus, Pane pane, List<Turret> turrets, Label label) {
         StackPane castle = new StackPane();
         Turret temp = this;
 
@@ -124,14 +124,8 @@ public abstract class Turret extends Tile {
                         if (nexus.getScore() >= getScore() / 4) {
                             upgrade();
                             nexus.decreaseScore(getScore() / 4);
-                            for (Node find : pane.getChildren())
-                                if (find instanceof Text) {
-                                    pane.getChildren().remove(find);
-                                    break;
-                                }
+                            label.setText("Heath: " + nexus.getHealth() + "         " + nexus.getScore() + "$");
 
-                            Text text = nexus.getText();
-                            pane.getChildren().add(text);
                         }
                         pane.getChildren().remove(vBoxInfo);
                     }
@@ -150,13 +144,7 @@ public abstract class Turret extends Tile {
                         pane.getChildren().remove(castle);
                         pane.getChildren().remove(vBoxInfo);
                         turrets.remove(temp);
-                        for (Node find : pane.getChildren())
-                            if (find instanceof Text) {
-                                pane.getChildren().remove(find);
-                                break;
-                            }
-                        Text text = nexus.getText();
-                        pane.getChildren().add(text);
+                        label.setText("Heath: " + nexus.getHealth() + "         " + nexus.getScore() + "$");
                     }
                 });
 

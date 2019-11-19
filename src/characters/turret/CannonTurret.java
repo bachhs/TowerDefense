@@ -17,7 +17,7 @@ public class CannonTurret extends Turret {
         setRange(200);
         damage = 20;
         score = 25;
-        shootTime = 2;
+        shootTime = 1;
         fullTurretPath = "./resources/img/CannonFull.png";
     }
 }
