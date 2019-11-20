@@ -1,9 +1,5 @@
 package characters;
 
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
 public class Nexus implements Health {
     private int health;
     private int score;

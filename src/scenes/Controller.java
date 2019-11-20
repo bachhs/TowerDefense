@@ -19,7 +19,6 @@ import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -44,14 +43,14 @@ public class Controller {
     public void addTurret(ImageView way, String turretType, double x, double y) {
         Turret turret;
         switch (turretType) {
-            case "DoubleMissileTurret":
-                turret = new DoubleMissileTurret();
-                break;
-            case "SnipMissileTurret":
-                turret = new SnipMissileTurret();
-                break;
-            default:
-                turret = new CannonTurret();
+        case "DoubleMissileTurret":
+            turret = new DoubleMissileTurret();
+            break;
+        case "SnipMissileTurret":
+            turret = new SnipMissileTurret();
+            break;
+        default:
+            turret = new CannonTurret();
         }
         if (nexus.getScore() >= turret.getScore()) {
             nexus.decreaseScore(turret.getScore());
@@ -102,20 +101,21 @@ public class Controller {
                 for (Turret turret : turrets)
                     turret.checkingEnemy(enemies);
 
-                for (int i = 0; i< turrets.size(); i++) {
-                    if (turrets.get(i).getClass().toString().equals("class characters.turret.CannonTurret") && elapsedCannon == turrets.get(i).getShootTime()) {
+                for (int i = 0; i < turrets.size(); i++) {
+                    if (turrets.get(i).getClass().toString().equals("class characters.turret.CannonTurret")
+                            && elapsedCannon == turrets.get(i).getShootTime()) {
                         lastCannonUpdate = System.currentTimeMillis();
                         turrets.get(i).shoot(turrets.get(i).getTarget(enemies), pane);
                     }
 
-
-                    if (turrets.get(i).getClass().toString().equals("class characters.turret.DoubleMissileTurret") && elapsedDouble == turrets.get(i).getShootTime()) {
+                    if (turrets.get(i).getClass().toString().equals("class characters.turret.DoubleMissileTurret")
+                            && elapsedDouble == turrets.get(i).getShootTime()) {
                         lastDoubleUpdate = System.currentTimeMillis();
                         turrets.get(i).shoot(turrets.get(i).getTarget(enemies), pane);
                     }
 
-
-                    if (turrets.get(i).getClass().toString().equals("class characters.turret.SnipMissileTurret") && elapsedSnip == turrets.get(i).getShootTime()) {
+                    if (turrets.get(i).getClass().toString().equals("class characters.turret.SnipMissileTurret")
+                            && elapsedSnip == turrets.get(i).getShootTime()) {
                         lastSnipUpdate = System.currentTimeMillis();
                         turrets.get(i).shoot(turrets.get(i).getTarget(enemies), pane);
                     }

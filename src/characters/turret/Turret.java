@@ -16,15 +16,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.util.List;
 
 public abstract class Turret extends Tile {
@@ -222,8 +225,13 @@ public abstract class Turret extends Tile {
                 pane.getChildren().removeAll(shot.getImageView());
             });
             e.decreaseHP(getDamage());
-
             pt.play();
+
+            MediaPlayer shootFXPlayer = new MediaPlayer(
+                    new Media(new File("./src/resources/music/AttackFX.mp3").toURI().toString()));
+            shootFXPlayer.setVolume(0.5);
+            shootFXPlayer.play();
+            pane.getChildren().add(new MediaView(shootFXPlayer));
         }
     }
 
