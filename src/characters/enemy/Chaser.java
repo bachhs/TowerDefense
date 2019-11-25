@@ -4,11 +4,11 @@ public class Chaser extends Enemy {
     private static final String path = "./resources/img/Chaser.png";
     public Chaser() {
         super(path);
-        MAX_HP = 20;
+        MAX_HP = 15;
         HP = MAX_HP;
-        speed = 5;
-        armor = 20;
-        score = 5;
+        speed = 6;
+        armor = 15;
+        score = 10;
         damage = 5;
     }
 }

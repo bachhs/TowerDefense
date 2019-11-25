@@ -32,6 +32,7 @@ public class Controller {
     private Pane pane;
     private Label label = new Label();
     private Stage stage;
+    private int i = 0;
 
     public Controller(Stage stage, Pane pane, Path path) {
         this.stage = stage;
@@ -58,7 +59,6 @@ public class Controller {
             pane.getChildren().add(turret.getNode(nexus, pane, turrets, label));
             turrets.add(turret);
             label.setText("Heath: " + nexus.getHealth() + "         " + nexus.getScore() + "$");
-            System.out.println(turrets.size());
         }
     }
 
@@ -101,25 +101,32 @@ public class Controller {
                 for (Turret turret : turrets)
                     turret.checkingEnemy(enemies);
 
-                for (int i = 0; i < turrets.size(); i++) {
-                    if (turrets.get(i).getClass().toString().equals("class characters.turret.CannonTurret")
-                            && elapsedCannon == turrets.get(i).getShootTime()) {
-                        lastCannonUpdate = System.currentTimeMillis();
-                        turrets.get(i).shoot(turrets.get(i).getTarget(enemies), pane);
+                if (elapsedCannon == 1) {
+                    lastCannonUpdate = System.currentTimeMillis();
+                    for (int i = 0; i < turrets.size(); i++) {
+                        if (turrets.get(i).getClass().toString().equals("class characters.turret.CannonTurret")) {
+                            turrets.get(i).shoot(turrets.get(i).getTarget(enemies), pane);
+                        }
                     }
+                }
 
-                    if (turrets.get(i).getClass().toString().equals("class characters.turret.DoubleMissileTurret")
-                            && elapsedDouble == turrets.get(i).getShootTime()) {
-                        lastDoubleUpdate = System.currentTimeMillis();
-                        turrets.get(i).shoot(turrets.get(i).getTarget(enemies), pane);
+                if (elapsedDouble == 2) {
+                    lastDoubleUpdate = System.currentTimeMillis();
+                    for (int i = 0; i < turrets.size(); i++) {
+                        if (turrets.get(i).getClass().toString()
+                                .equals("class characters.turret.DoubleMissileTurret")) {
+                            turrets.get(i).shoot(turrets.get(i).getTarget(enemies), pane);
+                        }
                     }
+                }
 
-                    if (turrets.get(i).getClass().toString().equals("class characters.turret.SnipMissileTurret")
-                            && elapsedSnip == turrets.get(i).getShootTime()) {
-                        lastSnipUpdate = System.currentTimeMillis();
-                        turrets.get(i).shoot(turrets.get(i).getTarget(enemies), pane);
+                if (elapsedSnip == 3) {
+                    lastSnipUpdate = System.currentTimeMillis();
+                    for (int i = 0; i < turrets.size(); i++) {
+                        if (turrets.get(i).getClass().toString().equals("class characters.turret.SnipMissileTurret")) {
+                            turrets.get(i).shoot(turrets.get(i).getTarget(enemies), pane);
+                        }
                     }
-
                 }
 
                 for (int i = 0; i < enemies.size(); i++) {
@@ -148,6 +155,7 @@ public class Controller {
                 }
             }
         };
+
         gameLoop.start();
     }
 
@@ -161,4 +169,5 @@ public class Controller {
         for (int i = 0; i < 2; i++)
             enemies.add(new Hunk());
     }
+
 }

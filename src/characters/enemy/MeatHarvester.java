@@ -5,11 +5,11 @@ public class MeatHarvester extends Enemy {
     
     public MeatHarvester() {
         super(path);
-        MAX_HP = 40;
+        MAX_HP = 30;
         HP = MAX_HP;
-        speed = 8;
+        speed = 6;
         armor = 40;
-        score = 15;
+        score = 20;
         damage = 10;
     }
 }

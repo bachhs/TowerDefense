@@ -6,7 +6,7 @@ public class Nexus implements Health {
 
     public Nexus() {
         this.health = 100;
-        this.score = 50;
+        this.score = 100;
     }
 
     public int getHealth() {

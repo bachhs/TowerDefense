@@ -197,7 +197,6 @@ public abstract class Turret extends Tile {
 
     public void upgrade() {
         damage *= 1.2;
-        shootTime *= 0.75;
     }
 
     public Enemy getTarget(List<Enemy> enemies) {
