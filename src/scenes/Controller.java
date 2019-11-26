@@ -19,11 +19,9 @@ import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Controller {
@@ -73,7 +71,6 @@ public class Controller {
         label.setTranslateX(-370);
         label.setTranslateY(-325);
         pane.getChildren().add(label);
-
 
         Button nextWave = new Button("Next Wave");
         nextWave.setFont(Font.font(20));
@@ -189,9 +186,9 @@ public class Controller {
                 if (enemies.isEmpty() && currentWave != 0) {
                     label.setTranslateX(-73);
                     label.setTranslateY(-325);
-                    label.setText("Heath: " + nexus.getHealth() + "         " + nexus.getScore() + "$" + "                    " + "Wave Completed");
-                }
-                else {
+                    label.setText("Heath: " + nexus.getHealth() + "         " + nexus.getScore() + "$"
+                            + "                    " + "Wave Completed");
+                } else {
                     label.setTranslateX(-370);
                     label.setTranslateY(-325);
                     label.setText("Heath: " + nexus.getHealth() + "         " + nexus.getScore() + "$");
@@ -210,47 +207,40 @@ public class Controller {
             pane.getChildren().add(enemy.getHealthBar());
     }
 
-    //Sinh wave lính
+    /* Spawn 15 waves Enemy */
     private List<List<Enemy>> wave() {
         List<List<Enemy>> waveE = new ArrayList<>();
 
-        //Wave1
         List<Enemy> enemies1 = new ArrayList<>();
         for (int i = 0; i < 2; i++)
             enemies1.add(new Chaser());
         waveE.add(enemies1);
 
-        //Wave 2
         List<Enemy> enemies2 = new ArrayList<>();
         for (int i = 0; i < 4; i++)
             enemies2.add(new Chaser());
         waveE.add(enemies2);
 
-        //Wave 3
         List<Enemy> enemies3 = new ArrayList<>();
         for (int i = 0; i < 8; i++)
             enemies3.add(new Chaser());
         waveE.add(enemies3);
 
-        //Wave 4
         List<Enemy> enemies4 = new ArrayList<>();
         for (int i = 0; i < 2; i++)
             enemies4.add(new MeatHarvester());
         waveE.add(enemies4);
 
-        //Wave 5
         List<Enemy> enemies5 = new ArrayList<>();
         for (int i = 0; i < 3; i++)
             enemies5.add(new Hunk());
         waveE.add(enemies5);
 
-        //Wave 6
         List<Enemy> enemies6 = new ArrayList<>();
         for (int i = 0; i < 4; i++)
             enemies6.add(new MeatHarvester());
         waveE.add(enemies6);
 
-        //Wave 7
         List<Enemy> enemies7 = new ArrayList<>();
         for (int i = 0; i < 3; i++)
             enemies7.add(new MeatHarvester());
@@ -258,13 +248,11 @@ public class Controller {
             enemies7.add(new Hunk());
         waveE.add(enemies7);
 
-        //Wave 8
         List<Enemy> enemies8 = new ArrayList<>();
         for (int i = 0; i < 15; i++)
             enemies8.add(new Chaser());
         waveE.add(enemies8);
 
-        //Wave 9
         List<Enemy> enemies9 = new ArrayList<>();
         for (int i = 0; i < 5; i++)
             enemies9.add(new MeatHarvester());
@@ -273,25 +261,21 @@ public class Controller {
             enemies9.add(new Hunk());
         waveE.add(enemies9);
 
-        //Wave 10
         List<Enemy> enemies10 = new ArrayList<>();
         for (int i = 0; i < 2; i++)
             enemies10.add(new PeaceEnvog());
         waveE.add(enemies10);
 
-        //wave 11
         List<Enemy> enemies11 = new ArrayList<>();
         for (int i = 0; i < 8; i++)
             enemies11.add(new MeatHarvester());
         waveE.add(enemies11);
 
-        //Wave 12
         List<Enemy> enemies12 = new ArrayList<>();
         for (int i = 0; i < 8; i++)
             enemies12.add(new Hunk());
         waveE.add(enemies12);
 
-        //Wave 13
         List<Enemy> enemies13 = new ArrayList<>();
         for (int i = 0; i < 10; i++)
             enemies13.add(new MeatHarvester());
@@ -299,7 +283,6 @@ public class Controller {
             enemies13.add(new Hunk());
         waveE.add(enemies13);
 
-        //Wave 14
         List<Enemy> enemies14 = new ArrayList<>();
         for (int i = 0; i < 6; i++)
             enemies14.add(new MeatHarvester());
@@ -309,7 +292,6 @@ public class Controller {
             enemies14.add(new PeaceEnvog());
         waveE.add(enemies14);
 
-        //Wave 15
         List<Enemy> enemies15 = new ArrayList<>();
         for (int i = 0; i < 3; i++)
             enemies15.add(new PeaceEnvog());
