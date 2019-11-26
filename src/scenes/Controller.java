@@ -11,9 +11,12 @@ import characters.turret.SnipMissileTurret;
 import characters.turret.Turret;
 import constants.GlobalConstants;
 import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
@@ -32,13 +35,13 @@ public class Controller {
     private Pane pane;
     private Label label = new Label();
     private Stage stage;
-    private int i = 0;
+    private int maxWave = 10;
+    private int currentWave = 0;
 
     public Controller(Stage stage, Pane pane, Path path) {
         this.stage = stage;
         this.pane = pane;
         this.path = path;
-        spawnEnemies();
     }
 
     public void addTurret(ImageView way, String turretType, double x, double y) {
@@ -69,8 +72,22 @@ public class Controller {
         label.setTranslateX(-370);
         label.setTranslateY(-325);
         pane.getChildren().add(label);
-        for (Enemy enemy : enemies)
-            pane.getChildren().add(enemy.getHealthBar());
+
+
+        Button nextWave = new Button("Next Wave");
+        nextWave.setFont(Font.font(20));
+        nextWave.setTranslateX(0);
+        nextWave.setTranslateY(-325);
+        nextWave.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (enemies.isEmpty())
+                    spawnEnemies();
+            }
+        });
+        pane.getChildren().add(nextWave);
+
+
 
         AnimationTimer gameLoop = new AnimationTimer() {
             long lastUpdate = System.currentTimeMillis();
@@ -145,6 +162,14 @@ public class Controller {
                         label.setText("Heath: " + nexus.getHealth() + "         " + nexus.getScore() + "$");
                     }
                 }
+                if (currentWave == maxWave && enemies.isEmpty()) {
+                    this.stop();
+                    for (Node find : pane.getChildren())
+                        if (find instanceof MediaView)
+                            ((MediaView) find).getMediaPlayer().stop();
+                    pane.getChildren().clear();
+                    stage.setScene(Endgame.getVictoryScene(stage));
+                }
                 if (nexus.isLose()) {
                     this.stop();
                     for (Node find : pane.getChildren())
@@ -168,6 +193,8 @@ public class Controller {
             enemies.add(new MeatHarvester());
         for (int i = 0; i < 2; i++)
             enemies.add(new Hunk());
+        for (Enemy enemy : enemies)
+            pane.getChildren().add(enemy.getHealthBar());
     }
 
 }
