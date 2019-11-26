@@ -16,7 +16,7 @@ public class SnipMissileTurret extends Turret {
         rangeCircle.setRadius(range);
         speedBullet = 200;
         damage = 80;
-        score = 75;
+        score = 90;
         shootTime = 3;
         fullTurretPath = "./resources/img/SnipTurret.png";
     }

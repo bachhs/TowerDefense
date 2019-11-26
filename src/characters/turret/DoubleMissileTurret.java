@@ -15,8 +15,8 @@ public class DoubleMissileTurret extends Turret {
         setRange(250);
         speedBullet = 140;
         damage = 30;
-        score = 50;
-        shootTime = 3;
+        score = 55;
+        shootTime = 2;
         fullTurretPath = "./resources/img/DoubleFull.png";
     }
 }

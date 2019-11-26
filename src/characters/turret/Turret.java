@@ -115,10 +115,10 @@ public abstract class Turret extends Tile {
                 vBoxInfo.setPrefSize(150, 40);
                 vBoxInfo.setSpacing(10);
 
-                Button upgrade = new Button("Upgrade");
+                Button upgrade = new Button("Upgrade " + getScore()/3 + "$");
                 upgrade.setTranslateX(0);
                 upgrade.setTranslateY(50);
-                upgrade.setFont(Font.font(25));
+                upgrade.setFont(Font.font(20));
                 upgrade.setPrefSize(vBoxInfo.getPrefWidth(), vBoxInfo.getPrefHeight());
                 upgrade.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
@@ -126,7 +126,7 @@ public abstract class Turret extends Tile {
                         pane.getChildren().remove(rangeCircle);
                         if (nexus.getScore() >= getScore() / 4) {
                             upgrade();
-                            nexus.decreaseScore(getScore() / 4);
+                            nexus.decreaseScore(getScore() / 3);
                             label.setText("Heath: " + nexus.getHealth() + "         " + nexus.getScore() + "$");
 
                         }
@@ -134,10 +134,10 @@ public abstract class Turret extends Tile {
                     }
                 });
 
-                Button sell = new Button("Sell");
+                Button sell = new Button("Sell " + getScore()/2 + "$");
                 sell.setTranslateX(0);
                 sell.setTranslateY(75);
-                sell.setFont(Font.font(25));
+                sell.setFont(Font.font(20));
                 sell.setPrefSize(vBoxInfo.getPrefWidth(), vBoxInfo.getPrefHeight());
                 sell.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
