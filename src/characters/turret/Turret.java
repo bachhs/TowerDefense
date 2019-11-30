@@ -222,8 +222,9 @@ public abstract class Turret extends Tile {
             pane.getChildren().addAll(shot.getImageView());
             pt.setOnFinished(event -> {
                 pane.getChildren().removeAll(shot.getImageView());
+                e.decreaseHP(getDamage());
             });
-            e.decreaseHP(getDamage());
+
             pt.play();
 
             MediaPlayer shootFXPlayer = new MediaPlayer(
