@@ -12,12 +12,12 @@ public class SnipMissileTurret extends Turret {
         super(path);
         cannon = new ImageView(new Image(link));
         bulletView = Bullet;
-        setRange(300);
+        setRange(350);
         rangeCircle.setRadius(range);
         speedBullet = 200;
         damage = 80;
-        score = 90;
-        shootTime = 3;
+        score = 120;
+        shootTime = 4;
         fullTurretPath = "./resources/img/SnipTurret.png";
     }
 }

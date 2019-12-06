@@ -27,8 +27,9 @@ import static constants.GlobalConstants.*;
 
 public class Round1 {
 
-    private static final String ROUND_BACKGROUND = "./resources/img/Round_backGround.png";
-    private static final String ROUND1_WAY = "./resources/img/Round1_way.png";
+    private static final String ROUND_BACKGROUND = "./resources/img/Round2_backGround.png";
+    private static final String ROUND1_WAY = "./resources/img/Round2_way.png";
+    private static final int y_end = -198;
 
     public static Scene getScene(Stage stage) {
         Tile gameBackground = new Tile(ROUND_BACKGROUND);
@@ -42,7 +43,7 @@ public class Round1 {
 
         StackPane R1StackPane = new StackPane();
         R1StackPane.getChildren().addAll(Round1mediaView, gameBackground.getImageView(), way.getImageView());
-        Controller controller = new Controller(stage, R1StackPane, createPath());
+        Controller controller = new Controller(stage, R1StackPane, createPath(), y_end);
         controller.start();
 
         gameBackground.getImageView().setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -50,6 +51,7 @@ public class Round1 {
             public void handle(MouseEvent mouseEvent1) {
                 double x = mouseEvent1.getX();
                 double y = mouseEvent1.getY();
+
 
                 VBox turretSelector = new VBox();
                 turretSelector.setOpacity(0.8);
@@ -101,10 +103,13 @@ public class Round1 {
 
     public static Path createPath() {
         Path path = new Path();
-        MoveTo spawn = new MoveTo(-325.0, 500.0);
-        CubicCurveTo cubicCurveTo = new CubicCurveTo(-325, 0, -320, 0, -240, -10);
-        LineTo line = new LineTo(800.0, -10.0);
-        path.getElements().addAll(spawn, cubicCurveTo, line);
+        MoveTo spawn = new MoveTo(-800.0, 260.0);
+        LineTo line = new LineTo(395.0, 260.0);
+        LineTo line1 = new LineTo(395,68);
+        LineTo line2 = new LineTo(-300,68);
+        LineTo line3 = new LineTo(-300,-134);
+        LineTo line4 = new LineTo(900,-134);
+        path.getElements().addAll(spawn, line, line1, line2, line3, line4);
         return path;
     }
 }

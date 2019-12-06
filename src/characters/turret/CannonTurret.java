@@ -15,7 +15,7 @@ public class CannonTurret extends Turret {
         bulletView = Bullet;
         speedBullet = 150;
         setRange(200);
-        damage = 15;
+        damage = 12;
         score = 30;
         shootTime = 1;
         fullTurretPath = "./resources/img/CannonFull.png";

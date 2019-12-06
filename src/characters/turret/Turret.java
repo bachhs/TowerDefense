@@ -127,8 +127,8 @@ public abstract class Turret extends Tile {
                         if (nexus.getScore() >= getScore() / 4) {
                             upgrade();
                             nexus.decreaseScore(getScore() / 3);
+                            score *= 1.5;
                             label.setText("Heath: " + nexus.getHealth() + "         " + nexus.getScore() + "$");
-
                         }
                         pane.getChildren().remove(vBoxInfo);
                     }
@@ -222,8 +222,9 @@ public abstract class Turret extends Tile {
             pane.getChildren().addAll(shot.getImageView());
             pt.setOnFinished(event -> {
                 pane.getChildren().removeAll(shot.getImageView());
+                e.decreaseHP(getDamage());
             });
-            e.decreaseHP(getDamage());
+
             pt.play();
 
             MediaPlayer shootFXPlayer = new MediaPlayer(

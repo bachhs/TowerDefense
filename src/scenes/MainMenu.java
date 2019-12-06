@@ -26,7 +26,7 @@ import java.util.Optional;
 import static constants.GlobalConstants.*;
 
 enum MainMenuOption {
-    Start, Continue, Setting, Exit
+    Easy, Hard, Setting, Exit
 }
 
 public class MainMenu {
@@ -79,18 +79,23 @@ public class MainMenu {
             menuOption.getChildren().add(button[i]);
         }
 
-        button[MainMenuOption.Start.ordinal()].addEventHandler(MouseEvent.MOUSE_CLICKED,
+        button[MainMenuOption.Easy.ordinal()].addEventHandler(MouseEvent.MOUSE_CLICKED,
                 new EventHandler<MouseEvent>() {
 
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         mainMusic.stop();
-                        if (ROUND == 3)
-                            stage.setScene(Round1.getScene(stage));
-                        else if (ROUND == 2)
-                            stage.setScene(Round2.getScene(stage));
-                        else
-                            stage.setScene(Round1.getScene(stage));
+                        stage.setScene(Round1.getScene(stage));
+
+                    }
+                });
+        button[MainMenuOption.Hard.ordinal()].addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        mainMusic.stop();
+                        stage.setScene(Round2.getScene(stage));
 
                     }
                 });

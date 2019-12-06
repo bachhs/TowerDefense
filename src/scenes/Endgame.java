@@ -27,7 +27,7 @@ public class Endgame {
         playAgain.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                stage.setScene(Round1.getScene(stage));
+                stage.setScene(Round2.getScene(stage));
             }
         });
 
@@ -62,7 +62,7 @@ public class Endgame {
         nextRound.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                stage.setScene(Round1.getScene(stage));
+                stage.setScene(Round2.getScene(stage));
             }
         });
 
