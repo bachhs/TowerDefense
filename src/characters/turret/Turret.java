@@ -220,18 +220,20 @@ public abstract class Turret extends Tile {
             pt.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
             pt.setAutoReverse(true);
             pane.getChildren().addAll(shot.getImageView());
+            MediaPlayer shootFXPlayer = new MediaPlayer(
+                    new Media(new File("./src/resources/music/AttackFX.mp3").toURI().toString()));
+            shootFXPlayer.setVolume(0.5);
+            shootFXPlayer.play();
+            MediaView mediaView = new MediaView(shootFXPlayer);
+            pane.getChildren().add(mediaView);
             pt.setOnFinished(event -> {
                 pane.getChildren().removeAll(shot.getImageView());
+                pane.getChildren().remove(mediaView);
                 e.decreaseHP(getDamage());
             });
 
             pt.play();
 
-            MediaPlayer shootFXPlayer = new MediaPlayer(
-                    new Media(new File("./src/resources/music/AttackFX.mp3").toURI().toString()));
-            shootFXPlayer.setVolume(0.5);
-            shootFXPlayer.play();
-            pane.getChildren().add(new MediaView(shootFXPlayer));
         }
     }
 

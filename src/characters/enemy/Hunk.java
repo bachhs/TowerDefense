@@ -5,11 +5,11 @@ public class Hunk extends Enemy {
 
     public Hunk() {
         super(path);
-        MAX_HP = 80;
+        MAX_HP = 75;
         HP = MAX_HP;
         speed = 2;
         armor = 65;
-        score = 20;
+        score = 23;
         damage = 10;
     }
 }
