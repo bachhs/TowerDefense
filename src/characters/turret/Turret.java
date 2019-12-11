@@ -115,7 +115,7 @@ public abstract class Turret extends Tile {
                 vBoxInfo.setPrefSize(150, 40);
                 vBoxInfo.setSpacing(10);
 
-                Button upgrade = new Button("Upgrade " + getScore()/3 + "$");
+                Button upgrade = new Button("Upgrade " + getScore() / 3 + "$");
                 upgrade.setTranslateX(0);
                 upgrade.setTranslateY(50);
                 upgrade.setFont(Font.font(20));
@@ -134,7 +134,7 @@ public abstract class Turret extends Tile {
                     }
                 });
 
-                Button sell = new Button("Sell " + getScore()/2 + "$");
+                Button sell = new Button("Sell " + getScore() / 2 + "$");
                 sell.setTranslateX(0);
                 sell.setTranslateY(75);
                 sell.setFont(Font.font(20));
